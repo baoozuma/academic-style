@@ -1,0 +1,218 @@
+\documentclass[11pt]{article}
+
+% --- Font và encoding ---
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\usepackage{mathpazo}
+
+% --- Cấu hình lề và spacing ---
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{setspace}
+\setstretch{1.2}
+\setlength{\parskip}{0.5em}
+\setlength{\parindent}{0pt}
+
+% --- Header/footer đẹp ---
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\nouppercase{\leftmark}}
+\fancyhead[R]{\thepage}
+
+% --- Định dạng đề mục ---
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection.}{0.5em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection.}{0.5em}{}
+
+% --- Toán học và danh sách ---
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{enumitem}
+
+% --- Hyperlink ---
+\usepackage[colorlinks=true, linkcolor=blue, urlcolor=blue, citecolor=blue]{hyperref}
+
+% --- Gói màu và khung ---
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{theorems}
+
+% --- Các môi trường định lý có khung + tự động nhãn ---
+% --- Các môi trường toán học có khung ---
+\newtcbtheorem[number within=section]{theorem}{Theorem}%
+  {colback=blue!2!white, colframe=blue!40!black,
+   fonttitle=\bfseries,
+   boxed title style={enhanced, top=2mm, toprule=1pt},
+   title={Theorem},
+   breakable,
+   before upper={\leavevmode\parindent0pt}
+}{th}
+
+\newtcbtheorem[number within=section]{definition}{Definition}%
+  {colback=green!2!white, colframe=green!40!black,
+   fonttitle=\bfseries,
+   boxed title style={enhanced, top=2mm, toprule=1pt},
+   title={Definition},
+   breakable,
+   before upper={\leavevmode\parindent0pt}
+}{def}
+
+\newtcbtheorem[number within=section]{lemma}{Lemma}%
+  {colback=yellow!20!white, colframe=orange!100!black,
+   fonttitle=\bfseries,
+   boxed title style={enhanced, top=2mm, toprule=1pt},
+   title={Lemma},
+   breakable,
+   before upper={\leavevmode\parindent0pt}
+}{lem}
+
+\newtcbtheorem[number within=section]{example}{Example}%
+  {colback=gray!2!white, colframe=gray!50!black,
+   fonttitle=\bfseries,
+   boxed title style={enhanced, top=2mm, toprule=1pt},
+   title={Example},
+   breakable,
+   before upper={\leavevmode\parindent0pt}
+}{ex}
+
+
+% --- Môi trường chứng minh ---
+\renewenvironment{proof}[1][\proofname]{\par\noindent\textit{#1.} }{\hfill$\square$\par}
+
+% --- Thông tin tài liệu ---
+\title{\textbf{Linear Algebra}}
+\author{
+  \textbf{Aleksis Pham} \\ Pure Math, HCMUS \and
+  \textbf{Kento Kazuma} \\ Philosophy, Munich \and
+  \textbf{Pham Bao} \\ Computer Science, MIT
+}
+
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Vector Spaces}
+
+\begin{definition}{Vector Space}{1}
+A triple $(V, +, \cdot)$ consisting of a set $V$, an addition map
+\[
+  + : V \times V \to V, \quad (x,y) \mapsto x + y
+\]
+and a scalar multiplication map
+\[
+  \cdot : \mathbb{F} \times V \to V, \quad (\lambda, x) \mapsto \lambda x
+\]
+is called a real vector space if for all $x, y, z \in V$ and $\lambda, \mu \in \mathbb{R}$, the following axioms hold:
+\begin{enumerate}[label=\arabic*.]
+  \item $(x + y) + z = x + (y + z)$
+  \item $x + y = y + x$
+  \item $x + 0 = x$
+  \item $x + (-x) = 0$
+  \item $\lambda(\mu x) = (\lambda \mu)x$
+  \item $1x = x$
+  \item $\lambda(x + y) = \lambda x + \lambda y$
+  \item $(\lambda + \mu)x = \lambda x + \mu x$
+\end{enumerate}
+\end{definition}
+
+\textbf{Note:} $0$ and $1$ here denote the additive and multiplicative identities in $\mathbb{R}$.
+
+\begin{definition}{Subspace}{1}
+A subset $U$ of $V$ is a subspace if:
+\begin{itemize}
+  \item $0 \in U$
+  \item $u, w \in U \Rightarrow u + w \in U$
+  \item $a \in \mathbb{F},\ u \in U \Rightarrow au \in U$
+\end{itemize}
+\end{definition}
+
+\begin{definition}{Sum of Subspaces}{1}
+If $V_1, V_2, \dots, V_m$ are subspaces of $V$, their sum is
+\[
+  V_1 + V_2 + \dots + V_m = \left\{ v_1 + v_2 + \dots + v_m : v_i \in V_i \right\}
+\]
+\end{definition}
+
+\begin{theorem}
+The sum $V_1 + \dots + V_m$ is the smallest subspace of $V$ containing all $V_i$.
+\end{theorem}
+\begin{proof}
+Because $0 \in V_i$, we have $0 + \dots + 0 = 0 \in V_1 + \dots + V_m$. For any $x \in V_i$, we can express it as $0 + \dots + x + \dots + 0$ so $x \in V_1 + \dots + V_m$. Hence $V_i \subset V_1 + \dots + V_m$.
+
+Suppose $U$ is a subspace containing all $V_i$. Let $x \in V_1 + \dots + V_m$, then $x = v_1 + \dots + v_m$ with $v_i \in V_i \subset U$. Since $U$ is closed under addition, $x \in U$. So $V_1 + \dots + V_m \subset U$.
+\end{proof}
+
+\begin{definition}{Direct Sum}{1}
+The sum $V_1 + \dots + V_m$ is a \textit{direct sum}, denoted $V_1 \oplus \dots \oplus V_m$, if each element of the sum can be written uniquely as $v_1 + \dots + v_m$ with $v_i \in V_i$.
+\end{definition}
+
+\begin{theorem}
+The sum $V_1 + \dots + V_m$ is a direct sum if and only if the only way to write $0$ as $v_1 + \dots + v_m$ with $v_i \in V_i$ is when all $v_i = 0$.
+\end{theorem}
+\begin{proof}
+Suppose $v_1 + \dots + v_m = 0$ implies $v_i = 0$. Assume $v = x_1 + \dots + x_m = y_1 + \dots + y_m$ with $x_i, y_i \in V_i$. Subtracting gives $(x_1 - y_1) + \dots + (x_m - y_m) = 0$. By hypothesis, each $x_i = y_i$. Thus representation is unique.
+\end{proof}
+
+\begin{theorem}
+For subspaces $U, W \subset V$,
+\[
+  U + W \text{ is a direct sum } \Leftrightarrow U \cap W = \{0\}
+\]
+\end{theorem}
+\begin{proof}
+(\( \Rightarrow \)) Suppose $x \in U \cap W$, then $x = u + w$ uniquely, with $u \in U$, $w \in W$. But also $x - u = w \in U$, so $x \in U \Rightarrow w \in U$, hence $w \in U \cap W$. So $x = 0$.
+
+(\( \Leftarrow \)) Suppose $x = x_1 + y_1 = x_2 + y_2$ with $x_i \in U$, $y_i \in W$. Then $x_1 - x_2 = y_2 - y_1 \in U \cap W$. Since intersection is \{0\}, we get $x_1 = x_2$ and $y_1 = y_2$.
+\end{proof}
+
+\section{Finite-Dimensional Vector Spaces}
+
+A linear combination of $v_1, \dots, v_m \in V$ is any vector
+\[
+  a_1v_1 + \dots + a_mv_m
+\]
+The span is
+\[
+  \text{span}(v_1, \dots, v_m) = \left\{ a_1v_1 + \dots + a_mv_m : a_i \in \mathbb{F} \right\}
+\]
+
+\textbf{Note:} The span of a list of vectors is the smallest subspace containing them. If $\text{span}(v_1, \dots, v_m) = V$, we say the list \textit{spans} $V$.
+
+A list $v_1, \dots, v_m$ is linearly independent if the only solution to
+\[
+  a_1v_1 + \dots + a_mv_m = 0
+\]
+is $a_1 = \dots = a_m = 0$.
+
+\begin{lemma}
+If $v_1, \dots, v_m$ is a linearly dependent list, there exists $k$ such that $v_k \in \text{span}(v_1, \dots, v_{k-1})$. Removing $v_k$ does not change the span.
+\end{lemma}
+
+\begin{theorem}
+In a finite-dimensional vector space, every linearly independent list has length $\leq$ any spanning list.
+\end{theorem}
+\begin{proof}
+Let $A = (v_1, \dots, v_m)$ be linearly independent, $B = (w_1, \dots, w_n)$ spans $V$. Add $v_1$ to $B$: since $B$ spans $V$, $v_1$ is a combination of $w_i$, making the new list dependent. Remove a dependent $w_i$, repeat for each $v_i$. Since $B$ has $n$ vectors, we cannot insert more than $n$ independent $v_i$, so $m \leq n$.
+\end{proof}
+
+\begin{theorem}
+Every subspace of a finite-dimensional vector space is finite-dimensional.
+\end{theorem}
+\begin{proof}
+Let $V$ finite-dimensional, $U \subseteq V$ a subspace. If $U = \{0\}$, done. Otherwise pick $u_1 \in U$ nonzero. Inductively build linearly independent list $\{u_1, \dots, u_k\} \subset U$.
+
+If $U \subset \text{span}(u_1, \dots, u_k)$, done. Otherwise pick $u_{k+1} \notin \text{span}(\dots)$. Since $V$ is finite-dimensional, this process stops after $\dim V$ steps. Hence $U$ is spanned by finitely many vectors.
+\end{proof}
+
+\textbf{Definition (Basis):} A basis of $V$ is a linearly independent list that spans $V$.
+
+Every $v \in V$ has a unique representation in a basis:
+\[
+  v = a_1v_1 + \dots + a_mv_m
+\]
+
+Every spanning list can be reduced to a basis. Every finite-dimensional space has a basis. Every linearly independent list can be extended to a basis.
+
+\end{document}

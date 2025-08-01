@@ -1,7 +1,7 @@
 PWD d:\Pure Math\02 - Subjects\Algebra\Linear Algebra
 INPUT C:\Users\WIN10\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
-INPUT d:\Pure Math\02 - Subjects\Algebra\Linear Algebra\Linear Algebra.tex
-OUTPUT Linear Algebra.log
+INPUT d:\Pure Math\02 - Subjects\Algebra\Linear Algebra\ok.tex
+OUTPUT ok.log
 INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls
 INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls
 INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\tex\latex\base\size11.clo
@@ -270,7 +270,7 @@ INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\tex\generic\pgf\frontendlayer
 INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\tex\generic\pgf\frontendlayer\tikz\libraries\tikzlibraryfadings.code.tex
 INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\tex\generic\pgf\libraries\pgflibraryfadings.code.tex
 INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\tex\generic\pgf\libraries\pgflibraryfadings.code.tex
-OUTPUT Linear Algebra.pdf
+OUTPUT ok.pdf
 INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\tex\latex\tcolorbox\tcbposter.code.tex
 INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\tex\latex\psnfss\t1ppl.fd
 INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\tex\latex\psnfss\t1ppl.fd
@@ -278,17 +278,17 @@ INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\tex\latex\psnfss\t1ppl.fd
 INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\palatino\pplr8t.tfm
 INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\tex\latex\l3backend\l3backend-pdftex.def
 INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\tex\latex\l3backend\l3backend-pdftex.def
-INPUT .\Linear Algebra.aux
-INPUT .\Linear Algebra.aux
-INPUT Linear Algebra.aux
-OUTPUT Linear Algebra.aux
-INPUT .\Linear Algebra.out
-INPUT .\Linear Algebra.out
-INPUT Linear Algebra.out
-INPUT Linear Algebra.out
-INPUT .\Linear Algebra.out
-INPUT .\Linear Algebra.out
-OUTPUT Linear Algebra.out
+INPUT .\ok.aux
+INPUT .\ok.aux
+INPUT ok.aux
+OUTPUT ok.aux
+INPUT .\ok.out
+INPUT .\ok.out
+INPUT ok.out
+INPUT ok.out
+INPUT .\ok.out
+INPUT .\ok.out
+OUTPUT ok.out
 INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\tex\context\base\mkii\supp-pdf.mkii
 INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\tex\context\base\mkii\supp-pdf.mkii
 INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\tex\context\base\mkii\supp-pdf.mkii
@@ -337,40 +337,6 @@ INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\sym
 INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
 INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
 INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\palatino\pplb8t.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\palatino\pplr8t.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\palatino\pplb8t.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\palatino\pplr7t.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\palatino\pplr7t.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\palatino\pplr7t.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\public\mathpazo\zplmr7m.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\public\mathpazo\zplmr7m.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\public\mathpazo\zplmr7m.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\public\mathpazo\zplmr7y.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\public\mathpazo\zplmr7y.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\public\mathpazo\zplmr7y.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\public\mathpazo\zplmr7v.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\public\mathpazo\zplmr7v.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\public\mathpazo\zplmr7v.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\public\mathpazo\zplmr7t.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\public\mathpazo\zplmr7t.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\public\mathpazo\zplmr7t.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam10.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam10.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam10.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\tex\latex\psnfss\ufplmbb.fd
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\tex\latex\psnfss\ufplmbb.fd
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\tex\latex\psnfss\ufplmbb.fd
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\public\mathpazo\fplmbb.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\public\mathpazo\fplmbb.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\public\mathpazo\fplmbb.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\palatino\pplb8t.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\tex\latex\psnfss\ts1ppl.fd
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\tex\latex\psnfss\ts1ppl.fd
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\tex\latex\psnfss\ts1ppl.fd
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\palatino\pplr8c.tfm
 INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\vf\adobe\palatino\pplb8t.vf
 INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\palatino\pplb8r.tfm
 INPUT C:\Users\WIN10\AppData\Local\MiKTeX\fonts\map\pdftex\pdftex.map
@@ -379,54 +345,12 @@ INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\vf\adobe\palatino\pplb8
 INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\palatino\pplb8r.tfm
 INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\vf\adobe\palatino\pplr8t.vf
 INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\palatino\pplr8r.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\vf\adobe\palatino\pplb8t.vf
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\palatino\pplb8r.tfm
 INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\vf\adobe\palatino\pplr8t.vf
 INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\palatino\pplr8r.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\vf\public\mathpazo\zplmr7t.vf
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\public\mathpazo\fplmr.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr10.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\vf\public\mathpazo\zplmr7m.vf
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\public\mathpazo\fplmri.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmmi10.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\palatino\pplri8r.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\vf\adobe\palatino\pplr7t.vf
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\vf\public\mathpazo\zplmr7y.vf
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmsy10.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\vf\adobe\palatino\pplb8t.vf
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\palatino\pplb8r.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\palatino\pplri8t.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\vf\adobe\palatino\pplr8c.vf
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\vf\adobe\palatino\pplr7t.vf
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\palatino\pplr8r.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\vf\public\mathpazo\zplmr7m.vf
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\public\mathpazo\fplmri.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmmi10.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\palatino\pplri8r.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\vf\adobe\palatino\pplri8t.vf
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\vf\public\mathpazo\zplmr7y.vf
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmsy10.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\public\mathpazo\fplmr.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\palatino\pplr8t.tfm
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\palatino\pplr8t.tfm
-INPUT Linear Algebra.aux
-INPUT .\Linear Algebra.out
-INPUT .\Linear Algebra.out
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi10.pfb
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmmi10.pfb
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr10.pfb
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmr10.pfb
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy10.pfb
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy10.pfb
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\type1\public\mathpazo\fplmbb.pfb
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\type1\public\mathpazo\fplmbb.pfb
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\type1\public\mathpazo\fplmri.pfb
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\type1\public\mathpazo\fplmri.pfb
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\symbols\msam10.pfb
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\symbols\msam10.pfb
+INPUT ok.aux
+INPUT .\ok.out
+INPUT .\ok.out
 INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\type1\urw\palatino\uplb8a.pfb
 INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\type1\urw\palatino\uplb8a.pfb
 INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\type1\urw\palatino\uplr8a.pfb
 INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\type1\urw\palatino\uplr8a.pfb
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\type1\urw\palatino\uplri8a.pfb
-INPUT C:\Users\WIN10\AppData\Local\Programs\MiKTeX\fonts\type1\urw\palatino\uplri8a.pfb

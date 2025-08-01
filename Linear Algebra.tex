@@ -41,36 +41,32 @@
 % --- Các môi trường toán học có khung ---
 \newtcbtheorem[number within=section]{theorem}{Theorem}%
   {colback=blue!2!white, colframe=blue!40!black,
-   fonttitle=\bfseries,
    boxed title style={enhanced, top=2mm, toprule=1pt},
-   title={Theorem},
+   boxrule=0.8pt,  
    breakable,
    before upper={\leavevmode\parindent0pt}
 }{th}
 
 \newtcbtheorem[number within=section]{definition}{Definition}%
   {colback=green!2!white, colframe=green!40!black,
-   fonttitle=\bfseries,
-   boxed title style={enhanced, top=2mm, toprule=1pt},
-   title={Definition},
+   boxed title style={enhanced, top=2mm, toprule=1pt,enlarge top by=3mm, enlarge bottom by=3mm},
+   boxrule=0.8pt,  
    breakable,
    before upper={\leavevmode\parindent0pt}
 }{def}
 
 \newtcbtheorem[number within=section]{lemma}{Lemma}%
   {colback=yellow!20!white, colframe=orange!100!black,
-   fonttitle=\bfseries,
-   boxed title style={enhanced, top=2mm, toprule=1pt},
-   title={Lemma},
+   boxed title style={enhanced, top=2mm, toprule=1pt,enlarge top by=3mm, enlarge bottom by=3mm},,coltitle=black,
+   boxrule=0.8pt,  
    breakable,
    before upper={\leavevmode\parindent0pt}
 }{lem}
 
 \newtcbtheorem[number within=section]{example}{Example}%
   {colback=gray!2!white, colframe=gray!50!black,
-   fonttitle=\bfseries,
    boxed title style={enhanced, top=2mm, toprule=1pt},
-   title={Example},
+   boxrule=0.8pt,  
    breakable,
    before upper={\leavevmode\parindent0pt}
 }{ex}
@@ -135,84 +131,200 @@ If $V_1, V_2, \dots, V_m$ are subspaces of $V$, their sum is
 \]
 \end{definition}
 
-\begin{theorem}
+\begin{theorem}{}{1}
 The sum $V_1 + \dots + V_m$ is the smallest subspace of $V$ containing all $V_i$.
 \end{theorem}
 \begin{proof}
-Because $0 \in V_i$, we have $0 + \dots + 0 = 0 \in V_1 + \dots + V_m$. For any $x \in V_i$, we can express it as $0 + \dots + x + \dots + 0$ so $x \in V_1 + \dots + V_m$. Hence $V_i \subset V_1 + \dots + V_m$.
-
-Suppose $U$ is a subspace containing all $V_i$. Let $x \in V_1 + \dots + V_m$, then $x = v_1 + \dots + v_m$ with $v_i \in V_i \subset U$. Since $U$ is closed under addition, $x \in U$. So $V_1 + \dots + V_m \subset U$.
+ Because $0$ is in $V_1,\dots,V_m$, and subspaces are closed under addition, we get $0 + 0 +\dots + 0 = 0 \in V_1+V_2+\dots +V_m$. Then if $x$ is in any $V_i$ we can always put $0 + \dots + x + 0 + \dots = x \in V_1 + V_2 + \dots + V_m$
+ Therefore, $V_1, V_2 + \dots + V_m \in V_1 + V_2 + \dots + V_m$. Now we want to prove that it's the smallest subspace. Suppost that there is a subspace of $V$, namely $u$ which containing $V_1,\dots,V_m$ and $U \subset V_1 + V_2 + \dots + V_m$. Let $x$ be a vector such that $x \in V_1 + V_2 + \dots + V_m$ but not in $u$. For all $i$, there exists an $v_i \in V_i$ such that
+ $$
+ 	u = v_1 + \dots + v_m
+ $$
+ And since $U$ contains $V_1, V_2, \dots, V_m$ then
+ $$
+ 	\begin{aligned}
+ 			v_1 + v_2 &\in U\\
+ 			(v_1 + v_2) + v_3 &\in U\\
+ 			&\dots\\
+ 			(v_1 + v_2 + \dots + v_{n - 1}) + v_n &\in U\\
+ 	\end{aligned}
+ $$
+Hence, $u \in U$, which contradicts our assumption that $x$ is not in $U$. Therefore $V_1 + \dots + V_m$ is the smallest subspace of $V$ containing $V_1, \dots, V_m$. $\square$ 
 \end{proof}
 
 \begin{definition}{Direct Sum}{1}
 The sum $V_1 + \dots + V_m$ is a \textit{direct sum}, denoted $V_1 \oplus \dots \oplus V_m$, if each element of the sum can be written uniquely as $v_1 + \dots + v_m$ with $v_i \in V_i$.
 \end{definition}
 
-\begin{theorem}
+\begin{theorem}{}{1}
 The sum $V_1 + \dots + V_m$ is a direct sum if and only if the only way to write $0$ as $v_1 + \dots + v_m$ with $v_i \in V_i$ is when all $v_i = 0$.
 \end{theorem}
 \begin{proof}
-Suppose $v_1 + \dots + v_m = 0$ implies $v_i = 0$. Assume $v = x_1 + \dots + x_m = y_1 + \dots + y_m$ with $x_i, y_i \in V_i$. Subtracting gives $(x_1 - y_1) + \dots + (x_m - y_m) = 0$. By hypothesis, each $x_i = y_i$. Thus representation is unique.
+ It suffices to prove the converse, that is if 
+ $$
+ 	v_1 + v_2 + \dots + v_m = 0
+ $$
+ then $v_i = 0$, where each $v_i \in V_i$. Now we suppose that there is an element in the sum can be written in two different ways. Suppose that a vector $v$ can be written as
+ $$
+ v = x_1 + \dots + x_m = y_m + \dots + y_m
+ $$
+ where each $x_i,y_i \in V_i$. By subtracting the two expressions we get
+ $$
+ 	(x_1 - y_1) +\dots + (y_1 -y_m) = 0
+ $$
+ Let $v_i = (x_i - y_i)$ we get $v_1 + \dots + v_m = 0$. By the hypothesis, this implies $v_i$ must be equal to zero, which means $x_i = y_i$ for all $i$, This contradicts the assumption that the representations are distinct, that is $(x_1,\dots,x_m)$ is different from $(y_1,\dots,y_m)$
+ 
+ Therefore, every element in $V_1 + \dots + V_m$ has a unique representation. Hence, $V_1 +\dots + V_m$ is a direct sum.
 \end{proof}
 
-\begin{theorem}
+\begin{theorem}{}{1}
 For subspaces $U, W \subset V$,
 \[
   U + W \text{ is a direct sum } \Leftrightarrow U \cap W = \{0\}
 \]
 \end{theorem}
 \begin{proof}
-(\( \Rightarrow \)) Suppose $x \in U \cap W$, then $x = u + w$ uniquely, with $u \in U$, $w \in W$. But also $x - u = w \in U$, so $x \in U \Rightarrow w \in U$, hence $w \in U \cap W$. So $x = 0$.
-
-(\( \Leftarrow \)) Suppose $x = x_1 + y_1 = x_2 + y_2$ with $x_i \in U$, $y_i \in W$. Then $x_1 - x_2 = y_2 - y_1 \in U \cap W$. Since intersection is \{0\}, we get $x_1 = x_2$ and $y_1 = y_2$.
+We begin by proving the forward direction, then proceed to the converse.
+ Suppose first that $U + W$ is a direct sum and $x$ is a non-zero element such that $x \in U \cap W$ and $x \in U \oplus W$. 
+ According to the properties of direct sum, there exists a unique pair $(u,w)$ with$u \in U$ and $w \in W$ such that
+ $$
+ x = u + w$$
+Using the properties of vector subspaces, we have
+ $x, u \in U$ implies $x - u = w \in U$.
+ $x,w \in W$ implies $x - w = u \in W$. 
+ $x, w\in U$ implies $x +u = u + w + w \in U$ 
+ However, $x$ can be rewritten as
+ $$x = (u + w +w) - u$$
+ for $u + w + w \in U$ and $-u \in W$. This contradicts the assumption that the representations are distinct. Hence,  $x = 0$ and $U \cap W = \{0\}$
+ Secondly, suppose that $U \cap W = \{0\}$ and $x \in U + W$ such that $x$ can be written as
+ $$x = x_1+ y_1 = x_2 + y_2$$
+ which $(x_1,y_1) \neq (x_2,y_2)$ and $x_1, x_2 \in U$, $y_1, y_2 \in W$.  Notice that we have
+ $x_1, x_2$ implies $x_1 - x_2 \in U$ 
+ $y_1, y_2$ implies $y_2 - y_1 \in W$ 
+ By subtracting the two above expression we get
+ $$
+ 0 = x - x = (x_1 - x_2) + (y_2 - y_1)
+ $$
+ This implies $x_1 - x_2 = y_2 - y_1 = t$, which means $t \in U$ and $t \in W$, or $t \in U \cap W$.
+However, $0$ is the only element that belongs to $U \cap W$, then $t = 0$ and in particular $x_1 = x_2$ and $y_1 = y_2$ implies $(x_1,y_1) = (x_2,y_2)$, this contradicts the hypothesis that $(x_1,y_1) \neq (x_2,y_2)$. Hence, every element in $U + W$ can only be writen as a unique representation, which means $U+W$ is a direct sum . $\square$ 
 \end{proof}
 
 \section{Finite-Dimensional Vector Spaces}
-
-A linear combination of $v_1, \dots, v_m \in V$ is any vector
-\[
-  a_1v_1 + \dots + a_mv_m
-\]
-The span is
-\[
-  \text{span}(v_1, \dots, v_m) = \left\{ a_1v_1 + \dots + a_mv_m : a_i \in \mathbb{F} \right\}
-\]
-
-\textbf{Note:} The span of a list of vectors is the smallest subspace containing them. If $\text{span}(v_1, \dots, v_m) = V$, we say the list \textit{spans} $V$.
-
-A list $v_1, \dots, v_m$ is linearly independent if the only solution to
-\[
-  a_1v_1 + \dots + a_mv_m = 0
-\]
-is $a_1 = \dots = a_m = 0$.
-
-\begin{lemma}
-If $v_1, \dots, v_m$ is a linearly dependent list, there exists $k$ such that $v_k \in \text{span}(v_1, \dots, v_{k-1})$. Removing $v_k$ does not change the span.
+- A linear combination of a list $v_1, \dots,v_m$ of vector in $V$ is a vector of the form
+$$
+a_1v_1 + \dots + a_mv_m
+$$
+- Set of all linear combinations of a list of vectors is called
+	$$
+		span(v_1 + \dots +v_m) = \{a_1v_1 + \dots + a_mv_m: a_1,\dots a_m \in \mathbb{F}\}
+	$$
+- The span of a list of vectors in $V$ is the smallest subspace of $V$ containing all vectors in the list
+- If $span(v_1, \dots, v_m) = V$ we say that list spans $V$. 
+- a list of vectors in $V$ is called linearly independent if the only choice of $a_1,\dots,a_m \in \mathbb{F}$ that makes
+$$
+a_1v_1 + \dots a_m v_m = 0
+$$
+    is $a_1 = \dots = a_m = 0$. 
+\begin{lemma}{Linear dependence removal}{lem:dependence}
+Suppose $v_1,\dots,v_m$ is a linearly dependent list in $V$. Then there exists $k \in \{1,\dots,m\}$ such that
+ $$
+ v_k \in span(v_1,\dots,v_k)$$
+ Furthermore, if $k$ satisfies the condition above and the $k^{th}$ term is removed from $v_1,\dots,v_m$ then the span of remaning list equals $span(v_1,\dots,v_m)$  
 \end{lemma}
 
-\begin{theorem}
+\begin{theorem}{}{1}
 In a finite-dimensional vector space, every linearly independent list has length $\leq$ any spanning list.
 \end{theorem}
 \begin{proof}
-Let $A = (v_1, \dots, v_m)$ be linearly independent, $B = (w_1, \dots, w_n)$ spans $V$. Add $v_1$ to $B$: since $B$ spans $V$, $v_1$ is a combination of $w_i$, making the new list dependent. Remove a dependent $w_i$, repeat for each $v_i$. Since $B$ has $n$ vectors, we cannot insert more than $n$ independent $v_i$, so $m \leq n$.
+Let $A = (v_1, \dots, v_m)$ be a linearly independent list, and let $B = (w_1, \dots, w_n)$ be a spanning list of $V$. We aim to prove that $m \leq n$.
+
+ Since $B$ spans $V$, each $v_i$ can be written as a linear combination of vectors from $B$. In particular, $v_1$ is a linear combination of $w_1, \dots, w_n$. Therefore, the list $(v_1, w_1, \dots, w_n)$ is linearly dependent.
+ 
+ Because $A$ is linearly independent, $v_1 \neq 0$. Hence, there must exist some $k > 0$ such that $w_k$ is a linear combination of $v_1, w_1, \dots, w_{k-1}$. Removing $w_k$ from $B$, we still have a spanning list.
+ 
+ We continue this process: successively add each $v_i$ into the list and eliminate one redundant vector in $B$ each time to maintain a spanning list. Eventually, we obtain a list containing all of $v_1, \dots, v_m$ and still spanning $V$. Since we remove one vector from $B$ for each $v_i$ added, we cannot perform this more than $n$ times. Therefore, $m \leq n$.
 \end{proof}
 
-\begin{theorem}
+\begin{theorem}{}{1}
 Every subspace of a finite-dimensional vector space is finite-dimensional.
 \end{theorem}
 \begin{proof}
-Let $V$ finite-dimensional, $U \subseteq V$ a subspace. If $U = \{0\}$, done. Otherwise pick $u_1 \in U$ nonzero. Inductively build linearly independent list $\{u_1, \dots, u_k\} \subset U$.
-
-If $U \subset \text{span}(u_1, \dots, u_k)$, done. Otherwise pick $u_{k+1} \notin \text{span}(\dots)$. Since $V$ is finite-dimensional, this process stops after $\dim V$ steps. Hence $U$ is spanned by finitely many vectors.
+ Let $V$ be a finite-dimensional vector space, and let $U \subseteq V$ be a subspace.  
+ We aim to show that $U$ is finite-dimensional.
+ 
+ If $U = \{0\}$, then $U$ is clearly finite-dimensional.  
+ Otherwise, there exists a nonzero vector $u_1 \in U$.  
+ Let $A = \{u_1\}$.
+ 
+ Proceed inductively: suppose we have constructed a linearly independent list $A = \{u_1, u_2, \dots, u_{k-1}\} \subseteq U$.  
+ If $U \subseteq \mathrm{span}(A)$, then $U$ is spanned by finitely many vectors, and we are done.
+ 
+ Otherwise, there exists $u_k \in U$ such that  
+ $$
+ u_k \notin \mathrm{span}(u_1, u_2, \dots, u_{k-1}).
+ $$  
+ Add $u_k$ to $A$ and repeat the process.
+ 
+ Since $V$ is finite-dimensional, any linearly independent set in $V$ contains at most $\dim V$ vectors.  
+ Therefore, this process must terminate after finitely many steps.  
+ At termination, we have a finite linearly independent set $A \subseteq U$ such that $U \subseteq \mathrm{span}(A)$,  
+ i.e., $U = \mathrm{span}(A)$.
+ 
+ Hence, $U$ is finite-dimensional. 
 \end{proof}
 
-\textbf{Definition (Basis):} A basis of $V$ is a linearly independent list that spans $V$.
+\begin{definition}{Basis}{1}
+  A basis of $V$ is a linearly independent list that spans $V$.
 
 Every $v \in V$ has a unique representation in a basis:
 \[
   v = a_1v_1 + \dots + a_mv_m
 \]
+\end{definition}
 
-Every spanning list can be reduced to a basis. Every finite-dimensional space has a basis. Every linearly independent list can be extended to a basis.
+Every spanning list can be reduced to a basis. 
 
+Every finite-dimensional space has a basis. 
+
+Every linearly independent list can be extended to a basis.
+\begin{theorem}{}{1}
+  Suppose $V$ is finite-dimensional and $U$ is a subspace of $V$. Then there is a subspace $W$ of $V$ such that $V = U \oplus W$.
+\end{theorem}
+\begin{proof}
+  Let $u_1,\dots,u_n$ be a basis of $U$. This basis can be extended to $u_1,\dots,u_n,w_1,\dots,w_m$ which is a basis of $V$, and of course spans $V$. Now let $W = span(w_1,\dots,w_n)$. We are processed to prove $V = U \oplus W$ and $U \cap W = \{0\}$. First of all let $v \in V$, by the above hypothesis
+  $$v = (a_1w_1 + \dots + a_nw_n )+( b_1u_1 + \dots + b_mu_m) = x +y$$
+  Indeed, $x \in U, y \in W$ and $u_1,\dots,u_n,w_1,\dots,w_m$ is linearly independent. Therefore, there is unique pair $(x,y) \in U \times W$ such that $v = x + y$. This means $v \in U \oplus W$, hence $V = U \oplus W$.
+  
+\end{proof}
+\begin{definition}{Dimension, $\dim V$}{1}
+- The dimension of a finite-dimensional vector space is the length of any
+basis of the vector space.
+
+  - The dimension of a finite-dimensional vector space $V$ is denoted by $\dim V$.
+\end{definition}
+\begin{theorem}{Basis length does not depend on basis}{1}
+  Any two bases of a finite-dimensional vector space have the same length
+\end{theorem}
+\begin{proof}
+  Let $X$ and $Y$ be the basis set of $V$. Now we consider that $X$ is linearly independent and $Y$ is spanning list of $V$. By the lemma 2.1 $|X| \leq |Y|$. Conversely, $X$ is spanning list of $V$ and $Y$ is linearly independent, then $|X| \geq |Y|$. Hence $|X| = |Y|$.
+\end{proof}
+\begin{definition}{}{1}
+We consider these properties
+\begin{itemize}[label=-]
+  \item If $V$ is finite-dimensional and $U$ is a subspace of $V$, then $\dim U \leq \dim V$.
+  \item Every linearly independent list of vectors in $V$ of length $\dim V$ is a basis of $V$.
+  \item If $U$ is subspace of $V$ and $\dim U = \dim V$, then $U = V$.
+  \item Every spanning list of vectors in $V$ of length $\dim V$ is a basis of $V$.
+\end{itemize}  
+\end{definition}
+
+\begin{theorem}{Dimension of a sum}
+  If $V_1$ and $V_2$ are subspaces of a finite-dimensional vector space, then
+  \[
+    \dim(V_1 + V_2) = \dim V_1 + \dim V_2 - \dim(V_1 \cap V_2)
+  \]
+\end{theorem}
+\begin{proof}
+  Let $v_1,\dots,v_m$ be a basis of $V_1 \cap V_2$. This basis can be extended to $v_1,\dots,v_m, a_1 , \dots,a_k$ which is basis of $V_1$. We also have $v_1,\dots,v_m, b_1 , \dots,a_l$ is a basis of $V_2$.
+\end{proof}
 \end{document}

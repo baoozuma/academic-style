@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.3.28)  31 JUL 2025 15:15
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.3.28)  2 AUG 2025 10:52
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -23,7 +23,7 @@ File: size11.clo 2023/05/17 v1.4n Standard LaTeX file (size option)
 \abovecaptionskip=\skip48
 \belowcaptionskip=\skip49
 \bibindent=\dimen140
-) (C:\Users\WIN10\AppData\Local\Programs\MiKTeX\tex/latex/base\fontenc.sty
+) (settings.sty (C:\Users\WIN10\AppData\Local\Programs\MiKTeX\tex/latex/base\fontenc.sty
 Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
 ) (C:\Users\WIN10\AppData\Local\Programs\MiKTeX\tex/latex/base\inputenc.sty
 Package: inputenc 2021/02/14 v1.3d Input encoding file
@@ -600,7 +600,8 @@ Library (tcolorbox): 'tcbposter.code.tex' version '6.2.0'
 \c@tcb@cnt@definition=\count329
 \c@tcb@cnt@lemma=\count330
 \c@tcb@cnt@example=\count331
-LaTeX Font Info:    Trying to load font information for T1+ppl on input line 88.
+)
+LaTeX Font Info:    Trying to load font information for T1+ppl on input line 14.
  (C:\Users\WIN10\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\t1ppl.fd
 File: t1ppl.fd 2001/06/04 font definitions for T1/ppl.
 ) (C:\Users\WIN10\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
@@ -647,24 +648,24 @@ LaTeX Warning: Label `def:1' multiply defined.
 )
 \openout1 = `"Linear Algebra.aux"'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -700,7 +701,7 @@ LaTeX Font Info:    ... okay on input line 88.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring ON on input line 88.
+Package hyperref Info: Link coloring ON on input line 14.
 (Linear Algebra.out) (Linear Algebra.out)
 \@outlinefile=\write4
 \openout4 = `"Linear Algebra.out"'.
@@ -725,55 +726,55 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
 \c@lstlisting=\count339
-LaTeX Font Info:    Trying to load font information for OT1+ppl on input line 91.
+LaTeX Font Info:    Trying to load font information for OT1+ppl on input line 17.
  (C:\Users\WIN10\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1ppl.fd
 File: ot1ppl.fd 2001/06/04 font definitions for OT1/ppl.
 )
-LaTeX Font Info:    Trying to load font information for OML+zplm on input line 91.
+LaTeX Font Info:    Trying to load font information for OML+zplm on input line 17.
  (C:\Users\WIN10\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\omlzplm.fd
 File: omlzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OML/zplm.
 )
-LaTeX Font Info:    Trying to load font information for OMS+zplm on input line 91.
+LaTeX Font Info:    Trying to load font information for OMS+zplm on input line 17.
  (C:\Users\WIN10\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\omszplm.fd
 File: omszplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMS/zplm.
 )
-LaTeX Font Info:    Trying to load font information for OMX+zplm on input line 91.
+LaTeX Font Info:    Trying to load font information for OMX+zplm on input line 17.
  (C:\Users\WIN10\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\omxzplm.fd
 File: omxzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMX/zplm.
 )
-LaTeX Font Info:    Trying to load font information for OT1+zplm on input line 91.
+LaTeX Font Info:    Trying to load font information for OT1+zplm on input line 17.
  (C:\Users\WIN10\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1zplm.fd
 File: ot1zplm.fd 2002/09/08 Fontinst v1.914 font definitions for OT1/zplm.
 )
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 12.50409pt on input line 91.
+(Font)              scaled to size 12.50409pt on input line 17.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 9.37807pt on input line 91.
+(Font)              scaled to size 9.37807pt on input line 17.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 7.29405pt on input line 91.
+(Font)              scaled to size 7.29405pt on input line 17.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 12.50409pt on input line 91.
+(Font)              scaled to size 12.50409pt on input line 17.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 9.37807pt on input line 91.
+(Font)              scaled to size 9.37807pt on input line 17.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 7.29405pt on input line 91.
+(Font)              scaled to size 7.29405pt on input line 17.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 11.40997pt on input line 95.
+(Font)              scaled to size 11.40997pt on input line 21.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 8.33606pt on input line 95.
+(Font)              scaled to size 8.33606pt on input line 21.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 6.25204pt on input line 95.
+(Font)              scaled to size 6.25204pt on input line 21.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 11.40997pt on input line 95.
+(Font)              scaled to size 11.40997pt on input line 21.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 8.33606pt on input line 95.
+(Font)              scaled to size 8.33606pt on input line 21.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 6.25204pt on input line 95.
-LaTeX Font Info:    Trying to load font information for U+fplmbb on input line 101.
+(Font)              scaled to size 6.25204pt on input line 21.
+LaTeX Font Info:    Trying to load font information for U+fplmbb on input line 27.
  (C:\Users\WIN10\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ufplmbb.fd
 File: ufplmbb.fd 2003/10/30 Fontinst v1.914 font definitions for U/fplmbb.
 )
-LaTeX Font Info:    Trying to load font information for TS1+ppl on input line 121.
+LaTeX Font Info:    Trying to load font information for TS1+ppl on input line 47.
  (C:\Users\WIN10\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ts1ppl.fd
 File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
 ) [1
@@ -803,7 +804,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [4]
-Overfull \hbox (19.0433pt too wide) in paragraph at lines 259--261
+Overfull \hbox (19.0433pt too wide) in paragraph at lines 185--187
 []\T1/ppl/m/n/10.95 Proceed in-duc-tively: sup-pose we have con-structed a lin-early in-de-pen-dent list $\OML/zplm/m/it/10.95 A \OT1/zplm/m/n/10.95 = \OMS/zplm/m/n/10.95 f\OML/zplm/m/it/10.95 u[]\OT1/ppl/m/n/10.95 , \OML/zplm/m/it/10.95 u[]\OT1/ppl/m/n/10.95 , [] , \OML/zplm/m/it/10.95 u[]\OMS/zplm/m/n/10.95 g ^^R
  []
 
@@ -843,15 +844,15 @@ Package rerunfilecheck Info: File `"Linear Algebra".out' has not changed.
 (rerunfilecheck)             Checksum: DFF43F0A5BF01C7C2844BC3883E7572E;320.
  ) 
 Here is how much of TeX's memory you used:
- 28779 strings out of 474486
- 577626 string characters out of 5743755
+ 28797 strings out of 474486
+ 578098 string characters out of 5743755
  1943542 words of memory out of 5000000
- 50543 multiletter control sequences out of 15000+600000
+ 50558 multiletter control sequences out of 15000+600000
  591760 words of font info for 113 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 101i,12n,107p,603b,1059s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 116i,12n,121p,603b,1059s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/WIN10/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/WIN10/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/WIN10/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/WIN10/AppData/Local/Programs/MiKTeX/fonts/type1/public/mathpazo/fplmbb.pfb><C:/Users/WIN10/AppData/Local/Programs/MiKTeX/fonts/type1/public/mathpazo/fplmri.pfb><C:/Users/WIN10/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msam10.pfb><C:/Users/WIN10/AppData/Local/Programs/MiKTeX/fonts/type1/urw/palatino/uplb8a.pfb><C:/Users/WIN10/AppData/Local/Programs/MiKTeX/fonts/type1/urw/palatino/uplr8a.pfb><C:/Users/WIN10/AppData/Local/Programs/MiKTeX/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on "Linear Algebra.pdf" (7 pages, 141602 bytes).
+Output written on "Linear Algebra.pdf" (7 pages, 141486 bytes).
 PDF statistics:
  161 PDF objects out of 1000 (max. 8388607)
  34 named destinations out of 1000 (max. 500000)

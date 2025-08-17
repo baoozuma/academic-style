@@ -1,0 +1,1510 @@
+\documentclass[11pt]{article}
+
+\usepackage{settings}        % your style file
+\usepackage{listings}        % for code
+\usepackage{mathtools}       % small math conveniences
+
+\title{\textbf{Linear Algebra Solution}}
+\author{\textbf{Aleksis Pham} }
+\date{\today}
+
+
+% Simple listings style
+\lstset{
+  basicstyle=\ttfamily\small,
+  columns=fullflexible,
+  frame=single,
+  breaklines=true,
+  showstringspaces=false
+}
+
+\begin{document}
+\maketitle
+
+\section*{Prerequisite Lemmas (prove as needed)}
+\begin{boxedlemma}[Steinitz Exchange]\label{lem:steinitz}
+If $A$ is a linearly independent and $B$ is a spaning set  in a finite-dimensional space, then $|A|\le |B|$. Moreover, one can exchange elements of $A$ with those of $B$ to get a basis.
+\end{boxedlemma}
+\begin{proof}
+    Let $A = (v_1, \dots, v_m)$ be a linearly independent list, and let $B = (w_1, \dots, w_n)$ be a spanning list of $V$. We aim to prove that $m \leq n$.
+
+ Since $B$ spans $V$, each $v_i$ can be written as a linear combination of vectors from $B$. In particular, $v_1$ is a linear combination of $w_1, \dots, w_n$. Therefore, the list $(v_1, w_1, \dots, w_n)$ is linearly dependent.
+ 
+ Because $A$ is linearly independent, $v_1 \neq 0$. Hence, there must exist some $k > 0$ such that $w_k$ is a linear combination of $v_1, w_1, \dots, w_{k-1}$. Removing $w_k$ from $B$, we still have a spanning list.
+ 
+ We continue this process: successively add each $v_i$ into the list and eliminate one redundant vector in $B$ each time to maintain a spanning list. Eventually, we obtain a list containing all of $v_1, \dots, v_m$ and still spanning $V$. Since we remove one vector from $B$ for each $v_i$ added, we cannot perform this more than $n$ times. Therefore, $m \leq n$.
+\end{proof}
+
+\begin{boxedlemma}[Rank--Nullity]\label{lem:ranknull}
+For a linear map $T:V\to W$ between finite-dimensional spaces. Then $$\dim V=\mathrm{rank}(T)+\mathrm{nullity}(T)$$
+\end{boxedlemma}
+\begin{proof} Let $(v_1,\dots,v_n)$ be a basis of $V$ and $(v_1,\dots,v_k)$ is the basis of the kernel $T$ ($k \leq n$). Let $v \in V$ be arbitrary vector that can be expressed in combination:
+\[
+    v = a_1v_1 + \dots + a_nv_n
+\]
+Then 
+\[
+    T(v) = T(a_1v_1 + \dots + a_nv_n) = a_{k + 1}w_{k + 1} + \dots + a_nw_n
+\]
+So the image of $f$ is 
+\[
+    \Im(f) = \mathrm{span}(w_{k + 1}, \dots, w_n)
+\]
+Moreover, the set $(w_{k + 1}, \dots, w_n)$ is linearly independent since from $T(v)= a_{k + 1}w_{k + 1} + \dots + a_nw_n = 0$ then $v \in \mathrm{kernel}(f)$. If there is some $a_i \neq 0$ for $i = k + 1,\dots, n$, then we can write 
+\[
+    a_1w_1 + \dots + a_kw_k - (\text{sum of $a_iw_i$ for }a_i \neq 0) = w_{k + 1} + \dots + a_nw_n - (\text{sum of $a_iw_i$ for }a_i\neq0 ) = 0
+\]
+Hence, all the $v_i$ whom $a_i \neq 0$ for $i > k$ is in $\mathrm{kernel}(f)$, which contradicts the fact that basis of the kernel spans itself already, moreover this set is linear independent. Hence $a_{k + 1} = \dots = a_n = 0$ then $(w_{k + 1},\dots,w_n)$ is linear independent. Therefore $|\Im(f)| = \mathrm{rank}(T) = n - k = \mathrm{dim}(v) - \mathrm{nullity}(T)$.
+\end{proof}
+\begin{lemma}[Cayley--Hamilton]\label{lem:CH}
+Every square matrix $A$ satisfies its characteristic polynomial $\chi_A(A)=0$.
+\end{lemma}
+
+\begin{lemma}[Schur Triangularization over $\mathbb{C}$]\label{lem:schur}
+For $A\in M_n(\mathbb{C})$ there exists unitary $U$ with $U^*AU$ upper triangular.
+\end{lemma}
+
+\begin{lemma}[Gram--Schmidt]\label{lem:GS}
+Any linearly independent set in an inner-product space can be orthonormalized.
+\end{lemma}
+
+
+
+\section*{I. Vector Spaces and Linear Maps}
+
+\begin{problem}
+Let $V$ be a vector space with $\dim V=n$. Prove that any two bases of $V$ have the same number of elements.
+\end{problem}
+\begin{sol}
+    Let $X,Y$ be basis of $V$. Since $X$ is linearly independent, by the lemma~\ref{lem:steinitz}, S there is a spanning list $Z$ that $|X| \leq |Z|$. Moreover, $Y$ is spanning in $V$ then $|Y| \geq |Z|$, therefore $|Y| \geq |X|$. Conversely, by exchanging the role that $|X|$ is spanning list and $|Y|$ is linearly independent, it would follow that $|Y| \leq |X|$. Hence $|X| = |Y|$.
+\end{sol}
+\begin{problem}
+Let $B=\{v_1,\dots,v_n\}$ be a basis of $V$. Show that 
+\[
+\varphi:\mathbb{F}^n\to V,\quad \varphi(a_1,\dots,a_n)=\sum_{i=1}^n a_i v_i
+\]
+is a linear isomorphism.
+\end{problem}
+\begin{sol}
+    Since $B$ is a basis and $(a_1,\dots,a_n) = \mathbb{F}^n$ then the linear combination
+    \[
+        \varphi(a_1,\dots,v_n) = a_1v_1 + \dots + a_n = v
+    \]
+    for all $v \in V$, thus $\varphi$ is surjective. Now suppose there is $(b_1,\dots,b_n)$ in $\mathbb{F}$ such that 
+    \[
+        \varphi(a_1,\dots,a_n) = \varphi(b_1,\dots,b_n)
+    \]
+    or equavilently
+    \[
+        \sum_{i = 1}^n a_iv_i = \sum_{i = 1}^n b_iv_i
+    \]
+    or 
+    \[
+        \sum_{i = 1}^n (a_i - b_i)v_i = 0
+    \]
+    Since $B$ is linearly independent, it follows that 
+    \[
+        a_i - b_i = 0
+    \]
+    for all $i$. Hence $(a_1, \dots , a_n) = (b_1, \dots, b_n )$, consequently, $\varphi$ is injective. Therefore, $\varphi$ is a linear isomorphism.
+\end{sol}
+\begin{problem}
+If $U,W\le V$ are subspaces of a finite-dimensional $V$, prove
+\[
+\dim(U+W)=\dim U+\dim W-\dim(U\cap W).
+\]
+\end{problem}
+\begin{sol}
+    Let two bases $U = (v_1,\dots,v_n)$ and $W = (w_1,\dots, w_m)$. We move the basis vectors from $W$ to $U$ as considering the following process $P(U,W)$:
+    
+    Step 1: If $w_1$ can be written as the combination of $v_1,\dots,v_n$, then we let $w_1 \in T$. If not, we let $w_1 \in U$ .\\
+
+    Step $k$: We put $w_k \in T$ if $w_k$ is combination of $v_1,\dots,v_n$ and in $U$ if not.
+
+    The process stops after $m$ steps. Since $W$ contains every vector that is element of $T$, it follows that $T \subset W$. Also, every element of $T$ is combination of basis of $U$, then $T \subset U$. Indeed $T$'s element is linearly independent and moreover $U\cap(W\backslash T) = \emptyset$, therefore $T = U \cap W$. Suppose that $v \in U$ and $W \in W$ and $|T| = r$, we have 
+    \[
+        U + W = \sum_{i = 1}^na_iv_i + \sum_{i = 1}^m b_iw_i 
+    \]
+as $w_i$ which is in $T$ can be written in combination of the basis of $U$, equavilently
+\[
+    U + W = \sum_{i = 1}^{n}c_iv_i + \sum_{i = 1}^{m - r}d_iw_i
+\]
+whom $v_i$ and $w_i$ is linearly independent. Hence $\dim(U + W ) = m + n - r =\dim(U) + \dim(W) - \dim(u \cap W)$.
+\end{sol}
+\begin{problem}
+Define $T:\mathbb{R}^4\to\mathbb{R}^3$ by $T(x_1,x_2,x_3,x_4)=(x_1+x_2,\;x_2+x_3,\;x_3+x_4)$. 
+Find bases of $\ker T$ and $\mathrm{Im}\,T$ and verify rank--nullity.
+\end{problem}
+\begin{sol}
+    The image vector can be rewritten as 
+    \[
+        \begin{bmatrix}
+            x_1+x_2 + 0x_3 + 0x_4\\
+            0x_1 + x_2 + x_3 + 0x_4\\
+            0x_1 + 0x_2 + x_3 + x_4\\
+        \end{bmatrix}
+        = 
+        \begin{bmatrix}
+            1 & 1 & 0 &0\\
+            0& 1 & 1 & 0\\
+            0 & 0 & 1 & 1\\
+        \end{bmatrix}
+        \cdot
+        \begin{bmatrix}
+            x_1\\x_2\\x_3\\x_4
+        \end{bmatrix}
+        = Ax
+    \]
+    By using elementary transform we have 
+    \[
+                \begin{bmatrix}
+            1 & 1 & 0 &0\\
+            0& 1 & 1 & 0\\
+            0 & 0 & 1 & 1\\
+        \end{bmatrix} \to         
+        \begin{bmatrix}
+            1 & 0 & 0 &0\\
+            0& 1 & 1 & 0\\
+            0 & 0 & 0 & 1\\
+        \end{bmatrix}
+        \to 
+        \begin{bmatrix}
+            1 & 0 & 0 &0\\
+            0& 1 & 0 & 0\\
+            0 & 0 & 1 & 0\\
+        \end{bmatrix}
+    \]
+    Hence $\kernel(T) = 1$, $\rank(T) = 3$. Solving the equation $Ax = 0$ we get 
+    \[
+        x_1 = -x_2 = x_3 = -x_4 = t
+    \]
+    The solution can be written in matrix form as 
+    \[
+        x = \begin{bmatrix}
+            x_1\\-x_1\\x_1\\-x_1
+        \end{bmatrix}
+        = \begin{bmatrix}
+            1\\-1\\1\\-1
+        \end{bmatrix}x_1 
+        + \begin{bmatrix}
+            0\\0\\0\\0
+        \end{bmatrix}x_2
+         + \begin{bmatrix}
+            0\\0\\0\\0
+        \end{bmatrix}x_3
+         + \begin{bmatrix}
+            0\\0\\0\\0
+        \end{bmatrix}x_4
+        = \begin{bmatrix}
+            1 & 0 & 0 & 0\\
+            -1 &0&0&0\\
+            1&0&0&0\\
+            -1&0&0&0
+        \end{bmatrix}
+    \]
+    Then $\ker(T) = \mathrm{span}\{[1,-1,1,-1]^T\}$ and 
+    \[
+        \Im(T) = \mathrm{span}\left\{[1,0,0]^T,[0,1,0]^T,[0,0,1]^T\right\} = \bb{R}^3
+    \]
+\end{sol}
+\begin{problem}
+Let $V=P_2(\mathbb{F})$ with basis $B=\{1,x,x^2\}$. Define $D:V\to V$ by $D(p)=p'$. 
+Compute $[D]_B^B$, then use it to compute $D^2(3x^2-5x+1)$.
+\end{problem}
+\begin{sol}
+    Let 
+    \[
+        B = \begin{bmatrix}
+            1&0&0\\
+            0&1&0\\
+            0&0&1
+        \end{bmatrix}
+    \]
+    be the basis matrix of $\{1,x,x^2\}$. Then the matrix of $D$ with respect to $B$ is given by
+    \[
+        D =\begin{bmatrix}
+            0&1&0\\
+            0&0&2\\
+            0&0&0
+        \end{bmatrix}
+    \]
+    and 
+    \[
+        D^2 =\begin{bmatrix}
+            0&0&2\\
+            0&0&0\\
+            0&0&0
+        \end{bmatrix}
+    \]
+    then 
+    \[
+    D^2(3x^2 - 5x + 1) = \begin{bmatrix}
+            0&0&2\\
+            0&0&0\\
+            0&0&0
+        \end{bmatrix}\cdot\begin{bmatrix}
+        1\\-5\\3
+        \end{bmatrix}
+        = \begin{bmatrix}
+            6\\0\\0
+        \end{bmatrix}
+    \]
+    Hence $D^2(3x^2-5x+1) = 6$.
+\end{sol}
+\begin{problem}
+Let $T:\mathbb{R}^3\to\mathbb{R}^3$ be $T(x,y,z)=(x-y,\;2x+z,\;y-z)$. 
+Compute $[T]$ in the standard basis, its rank and nullity, and decide if $T$ is invertible.
+\end{problem}
+\begin{sol}
+    Let $A$ be the matrix of $T$ with respect to the standard basis, then $A$ is given by
+    \[
+        A = [T] = \begin{bmatrix}
+            1&-1&0\\
+            2&0&1\\
+            0&1&-1
+        \end{bmatrix}
+    \]
+    Using elementary row operations, we can transform $A$ into the reduced row echelon form as follows: 
+    \[
+        A \to \begin{bmatrix}
+            1&-1&0\\
+            2&1&1\\
+            0&0&-1
+        \end{bmatrix}
+        \to 
+        \begin{bmatrix}
+            0&-1&0\\
+            1&1&1\\
+            0&0&-1
+        \end{bmatrix}
+        \to  
+        \begin{bmatrix}
+            0&1&0\\
+            1&0&1\\
+            0&0&-1
+        \end{bmatrix}
+        \to 
+        \begin{bmatrix}
+            1&0&0\\
+            0&1&0\\
+            0&0&1
+        \end{bmatrix}
+    \]
+    Hence $\rank(T) = 3$, $\kernel(T) = 0$ and $T$ is invertable.
+\end{sol}
+\begin{problem}
+Let $V=\mathbb{R}^3$, $U=\mathrm{span}\{(1,1,1)\}$. Find a basis of $V/U$ and describe the class of $(2,0,1)$.
+\end{problem}
+\begin{sol}
+    We have $\dim(V) = 3$ and $\dim(U) = 1$, then $\dim(V/U) = 2$. Choose additional vectors $\{[1,0,0]^T,[0,1,0]^T\}$ so the the coset 
+    \[
+        \{[1,0,0]^T + U, [0,1,0]^T + U\} 
+    \]
+    is a basis of $V/U$. Define the class $l = (2,0,1)$, we find the set of $T$ such that for $v \in T$, we have 
+    \[
+        l - v \in U
+    \]
+    which means if we let $v = (x,y,z)$ then 
+    \[
+        (2,0,1) - (x,y,z) = (\lambda,\lambda,\lambda) \text{ for }\lambda \in \bb{R}
+    \]
+    which means $x = 2 - \lambda$, $y = -\lambda$ and $z = 1 - \lambda$. The class of $(2,0,1)$ is 
+    \[
+        T = \{(2 - \lambda, -\lambda, 1 - \lambda) \mid \lambda \in \bb{R}\}
+    \]
+\end{sol}
+\begin{problem}
+Let $B=\{(1,0),(0,1)\}$ in $\mathbb{R}^2$, and $\{\varphi_1,\varphi_2\}$ its dual basis. For $f=3\varphi_1-\varphi_2$, compute $f(4,5)$ and write $f$ in canonical coordinates.
+\end{problem}
+\begin{sol}
+    We have 
+    \[
+        [B] = \begin{bmatrix}
+            1&0\\
+            0&1
+        \end{bmatrix}
+    \]
+    The the matrix of dual basis vectors is 
+    \[
+        [v] = [B]^{-1}v = \begin{bmatrix}
+            1&0\\
+            0&1
+        \end{bmatrix}\cdot\begin{bmatrix}
+            x\\y
+        \end{bmatrix} = \begin{bmatrix}
+            x\\y
+        \end{bmatrix}
+    \]
+\end{sol}
+Hence $\varphi_1(x,y) = x, \varphi_2(x,y) = y$. Then 
+\[
+    f = 3\varphi_1 - \varphi_2 = 3x - y
+\]
+and $f(4,5) = 3.4 - 5$. The canonical coordinates of $f$ are $[3,-1]$.
+\begin{problem}
+Let $T_1(x,y,z)=(x+y,y+z,z+x)$ and $T_2(x,y,z)=(x,y,0)$. Find $[T_1\circ T_2]$ and $[(T_1\circ T_2)^2]$ in the standard basis.
+\end{problem}
+\begin{sol}
+    We have 
+    \[
+        T_1\circ T_2 = (x + y,y + z,0)
+    \]
+    and 
+    \[
+        (T_1 \circ T_2) \circ (T_1 \circ T_2) = (x + y + y + z, y + z + 0, 0) = (x + 2y + z, y + z, 0)
+    \]
+    Hence 
+    \[  
+    [T_1\circ T_2] = \begin{bmatrix}
+            1&1&0\\
+            0&1&1\\
+            0&0&0
+    \end{bmatrix}
+    \quad\text{and}\quad
+    [(T_1\circ T_2)^2] = \begin{bmatrix}
+        1&2&1\\
+        0&1&1\\
+        0&0&0
+    \end{bmatrix}
+    \]
+\end{sol}
+\begin{problem}
+For linear maps $S:U\to V$ and $T:V\to W$, prove $\mathrm{rank}(T\circ S)\le \min\{\mathrm{rank} S,\mathrm{rank} T\}$.
+\end{problem}
+\begin{sol}
+    Since for any $u \in U$ we have 
+    \[
+        TS(u) = T(S(u)) \in \Im(T)
+    \]
+    Hence 
+    \[
+    \rank(TS) = \dim[\Im(TS)] \leq \dim[\Im(T)] \le \rank(T)
+    \]
+    Let $L: \Im(S) \to V$ and $L = TS$, hence 
+    \[
+        \rank(TS) = \rank(L) \leq  \dim[\Im(S)]= \rank(S)
+    \]
+    Therefore $\mathrm{rank}(T\circ S)\le \min\{\mathrm{rank} S,\mathrm{rank} T\}$
+\end{sol}
+\begin{problem}
+Let $P:\mathbb{R}^3\to\mathbb{R}^3$ be the projection onto the plane $x+y+z=0$ along direction $(1,1,1)$. 
+Find $[P]$ and check $P^2=P$.
+\end{problem}
+\begin{sol}
+    Let $(x,y,z)$ is arbitrary coordinates. We want to find the projection that make $(x,y,z)$ into $(p,q,r)$ suchthat $p + q + r$, and the vector 
+    \[
+        \begin{bmatrix}
+            x - p\\
+            y - q\\
+            z - r
+        \end{bmatrix}
+    \]
+    is parallel to $[1,1,1]^T$. We rewrite the projection into 
+    \[
+        [P]\begin{bmatrix}
+            x\\y\\z
+        \end{bmatrix}= \begin{bmatrix}
+            p\\q\\r
+        \end{bmatrix}
+    \]
+    Since the above vector is parallel to $[1,1,1]^T$ then 
+    \[
+        x - p = y - p = z - r = t
+    \]
+    plus three terms together we get 
+    \[
+        x + y + z = 3t
+    \]
+    Then we can rewrite 
+    \[
+        p = \frac{2x - y - z}{3}, q = \frac{-x + 2y - z}{3}, r = \frac{-x-y+2z}{3}
+    \]
+    Therefore $[P]$ is given by
+    \[
+        [P] = \begin{bmatrix}
+            \frac{2}{3} & -\frac{1}{3} & -\frac{1}{3}\\
+            \frac{1}{3} & \frac{2}{3} & -\frac{1}{3}\\
+            \frac{1}{3} & -\frac{1}{3} & \frac{2}{3}
+        \end{bmatrix}
+    \]
+    And since the output of $P$ lines on the plane $x + y + z = 0$ already, hence $P^n = P$ for all $n \geq 1$.
+\end{sol}
+\begin{problem}
+Let $R_\theta$ be rotation in $\mathbb{R}^2$ by angle $\theta$. Show $I-R_\theta$ is invertible for $\theta\not\equiv 0\pmod{2\pi}$ and find $(I-R_\theta)^{-1}$ explicitly.
+\end{problem}
+\begin{problem}[Dual Space and Double Dual]
+Let $V$ be a finite-dimensional vector space over a field $\mathbb{F}$.
+\begin{enumerate}
+    \item Show that $\dim V^* = \dim V$.
+    \item Construct a natural linear map $\Phi: V \to V^{**}$ and prove that it is an isomorphism.
+    \item Give an example showing that if $V$ is infinite-dimensional, $\Phi$ need not be surjective.
+\end{enumerate}
+\end{problem}
+
+\begin{problem}[Bilinear Forms and Orthogonality]
+Let $B: V \times V \to \mathbb{F}$ be a bilinear form on an $n$-dimensional vector space $V$.
+\begin{enumerate}
+    \item Define the radical of $B$ and prove it is a subspace of $V$.
+    \item Prove that $B$ is non-degenerate if and only if the induced map $V \to V^*$, $v \mapsto B(v, -)$, is an isomorphism.
+    \item Suppose $B$ is symmetric and non-degenerate over $\mathbb{R}$. Prove that $V$ has an orthogonal basis with respect to $B$.
+\end{enumerate}
+\end{problem}
+
+\begin{problem}[Spectral Theorem]
+Let $T: V \to V$ be a linear operator on a finite-dimensional real inner product space.
+\begin{enumerate}
+    \item Prove that if $T$ is self-adjoint (i.e.\ $\langle T v, w \rangle = \langle v, T w \rangle$), then $T$ has an orthonormal basis of eigenvectors.
+    \item Deduce that $T$ is diagonalizable by an orthogonal matrix in any orthonormal basis.
+\end{enumerate}
+\end{problem}
+
+\begin{problem}[Minimal Polynomial and Structure]
+Let $T: V \to V$ be a linear operator on a finite-dimensional vector space.
+\begin{enumerate}
+    \item Prove that the minimal polynomial $m_T(x)$ divides any polynomial $p(x)$ such that $p(T) = 0$.
+    \item Show that $T$ is diagonalizable if and only if $m_T(x)$ has no repeated factors over $\mathbb{F}$.
+\end{enumerate}
+\end{problem}
+
+\begin{problem}[Cyclic Subspaces and Rational Canonical Form]
+Let $T: V \to V$ be a linear operator over $\mathbb{F}$.
+\begin{enumerate}
+    \item Given $v \in V$, define the cyclic subspace $Z(v) = \mathrm{span}\{ v, T v, T^2 v, \dots \}$ and show that it is $T$-invariant.
+    \item Show that $Z(v)$ is isomorphic to $\mathbb{F}[x]/(m_v(x))$ where $m_v$ is the minimal polynomial of $v$ with respect to $T$.
+    \item Outline how to decompose $V$ into a direct sum of cyclic subspaces to obtain the rational canonical form of $T$.
+\end{enumerate}
+\end{problem}
+
+\begin{problem}[Jordan Decomposition – Theory]
+Let $T$ be a linear operator on a finite-dimensional complex vector space $V$.
+\begin{enumerate}
+    \item Prove that $V$ can be decomposed as a direct sum of generalized eigenspaces of $T$.
+    \item Show that on each generalized eigenspace corresponding to $\lambda$, the operator $T$ can be written as $\lambda I + N$ where $N$ is nilpotent.
+\end{enumerate}
+\end{problem}
+
+\begin{problem}[Norms on Finite-Dimensional Spaces]
+Let $\|\cdot\|_a$ and $\|\cdot\|_b$ be norms on a finite-dimensional vector space $V$ over $\mathbb{R}$.
+\begin{enumerate}
+    \item Prove that there exist positive constants $m, M$ such that
+    \[
+    m \|v\|_a \le \|v\|_b \le M \|v\|_a
+    \]
+    for all $v \in V$.
+    \item Conclude that all norms on a finite-dimensional space induce the same topology.
+\end{enumerate}
+\end{problem}
+
+\begin{problem}[Invariant Subspaces and Triangularization]
+Let $T: V \to V$ be a linear operator over $\mathbb{C}$.
+\begin{enumerate}
+    \item Prove that $T$ has at least one nontrivial invariant subspace.
+    \item Deduce that $T$ is triangularizable (i.e.\ represented by an upper triangular matrix) in some basis.
+\end{enumerate}
+\end{problem}
+\section*{II. Linear Systems: Inverses, Elimination, Cramer}
+
+\subsection*{A. Inverses}
+\begin{problem}
+Invert by row-reducing $[A\,|\,I]$ for $A=\begin{pmatrix}4&7\\2&6\end{pmatrix}$.
+\end{problem}
+
+\begin{problem}
+Invert by $[A\,|\,I]$:
+$A=\begin{pmatrix}1&2&3\\0&1&4\\5&6&0\end{pmatrix}$.
+\end{problem}
+
+\begin{problem}
+If $A=\begin{pmatrix}2&0&0\\0&3&4\\0&0&5\end{pmatrix}$, compute $A^{-1}$ efficiently.
+\end{problem}
+
+\begin{problem}
+Let $A(t)=\begin{pmatrix}1&t\\0&1\end{pmatrix}$. For which $t$ is $A(t)$ invertible? Compute $A(t)^{-1}$.
+\end{problem}
+
+\begin{problem}
+Prove the $2\times 2$ inverse formula: if $\det\begin{pmatrix}a&b\\ c&d\end{pmatrix}\neq 0$ then
+\[
+\begin{pmatrix}a&b\\ c&d\end{pmatrix}^{-1}
+=\frac{1}{ad-bc}\begin{pmatrix} d&-b\\ -c&a\end{pmatrix}.
+\]
+\end{problem}
+
+\begin{problem}[Sherman--Morrison]
+Let $A=I_n-uv^T$ with $v^Tu\neq 1$. Prove $A^{-1}=I_n+\dfrac{uv^T}{1-v^Tu}$.
+\end{problem}
+
+\subsection*{B. Gaussian Elimination}
+\begin{problem}
+Row-reduce $A=\begin{pmatrix}1&2&-1&0\\ 2&4&-2&1\\ 0&1&3&-1\end{pmatrix}$ to RREF; find rank, pivot columns, and a basis of $\ker A$.
+\end{problem}
+
+\begin{problem}
+Solve $Ax=b$ and classify the solution set for
+\[
+A=\begin{pmatrix}1&1&1\\ 1&2&3\\ 1&3&6\end{pmatrix},\quad
+b=\begin{pmatrix}1\\0\\4\end{pmatrix}.
+\]
+\end{problem}
+
+\begin{problem}
+\[
+\begin{cases}
+x+y+z=1,\\
+x+2y+3z=2,\\
+x+2y+t z=3.
+\end{cases}
+\]
+Solve in terms of $t$, determine when the solution is unique, and when the system is inconsistent.
+\end{problem}
+
+\begin{problem}
+Compute the RREF of
+$A=\begin{pmatrix}1&0&2&-1\\ 2&1&3&0\\ -1&1&0&1\end{pmatrix}$,
+then read off a basis for the column space and for the kernel.
+\end{problem}
+
+\begin{problem}
+Solve and verify:
+\[
+\begin{cases}
+2x-y+3z=5,\\
+-x+4y+z=6,\\
+3x+2y-2z=1.
+\end{cases}
+\]
+\end{problem}
+\begin{problem}
+Solve the system
+\[
+\begin{cases}
+x + 2y - z = 4, \\
+2x + y + z = 2, \\
+3x + 3y = 6
+\end{cases}
+\]
+\begin{enumerate}
+    \item Write it in augmented matrix form and reduce to RREF.
+    \item State whether the solution is unique, infinite, or nonexistent.
+    \item Express the solution set in parametric vector form.
+\end{enumerate}
+\end{problem}
+\begin{problem}
+Without fully solving, compute the rank of
+\[
+B =
+\begin{pmatrix}
+1 & 0 & 2 & -1 \\
+2 & 1 & 5 & 0 \\
+-1 & 1 & -1 & 2
+\end{pmatrix}
+\]
+by row reducing to echelon form.
+\end{problem}
+
+\begin{problem}
+Let
+\[
+T: \mathbb{R}^3 \to \mathbb{R}^3, \quad
+T(x,y,z) = (x + y, \ y + z, \ x + z).
+\]
+\begin{enumerate}
+    \item Find $\ker(T)$ and its dimension.
+    \item Find $\mathrm{im}(T)$ and its dimension.
+    \item Verify $\dim \ker(T) + \dim \mathrm{im}(T) = 3$.
+\end{enumerate}
+\end{problem}
+
+\begin{problem}
+Let
+\[
+C =
+\begin{pmatrix}
+1 & 1 \\
+0 & 1
+\end{pmatrix}.
+\]
+\begin{enumerate}
+    \item Compute $C^n$ for $n \geq 1$ by hand and guess the general formula.
+    \item Prove the formula by induction.
+\end{enumerate}
+\end{problem}
+
+\begin{problem}
+Given
+\[
+D =
+\begin{pmatrix}
+a & b \\
+c & d
+\end{pmatrix},
+\]
+\begin{enumerate}
+    \item Compute $\det(D)$.
+    \item Determine for which $(a,b,c,d)$ the matrix $D$ is invertible.
+    \item If invertible, write down $D^{-1}$.
+\end{enumerate}
+\end{problem}
+
+\begin{problem}
+Let $B = \{(1,0), (0,1)\}$ be the standard basis of $\mathbb{R}^2$ and let
+$B' = \{(2,1), (1,1)\}$.
+\begin{enumerate}
+    \item Find the change-of-basis matrix $P$ from $B'$ to $B$.
+    \item Given $v' = (3,1)$ in $B'$-coordinates, find its coordinates in $B$.
+\end{enumerate}
+\end{problem}
+\subsection*{C. Cramer’s Rule}
+\begin{problem}
+Solve the $2\times2$ system by Cramer’s rule:
+$\begin{cases} ax+by=e\\ cx+dy=f\end{cases}$ with $ad-bc\neq 0$.
+\end{problem}
+
+\begin{problem}
+Use Cramer’s rule to solve
+$\begin{cases}
+x+2y+3z=1\\
+2x+y+z=0\\
+3x+0\cdot y+2z=4
+\end{cases}$,
+and evaluate the three determinants explicitly.
+\end{problem}
+
+\begin{problem}[Parameter case]
+$\begin{cases}
+x+y+z=1\\
+2x+3y+4z=2\\
+tx+2y+3z=3
+\end{cases}$.
+For which $t$ does Cramer apply ($\det A\neq 0$)? Solve the exceptional cases by elimination.
+\end{problem}
+
+\section*{III. Determinants, Eigenvalues, and Diagonalization}
+
+\begin{problem}
+Compute $\det A$ using operations:
+$A=\begin{pmatrix}2&1&0&3\\ 0&1&4&2\\ 0&0&3&-1\\ 1&0&0&2\end{pmatrix}$.
+\end{problem}
+
+\begin{problem}
+If $A=\begin{pmatrix}B&C\\0&D\end{pmatrix}$ with $B,D$ square, show $\det A=\det B\cdot\det D$.
+Evaluate $\det\begin{pmatrix}1&2&0&0\\0&3&0&0\\5&-1&2&1\\0&0&0&4\end{pmatrix}$.
+\end{problem}
+
+\begin{problem}[Vandermonde]
+For distinct $x_1,\dots,x_n$,
+\[
+\det\begin{pmatrix}
+1&x_1&\cdots&x_1^{n-1}\\
+\vdots&\vdots&\ddots&\vdots\\
+1&x_n&\cdots&x_n^{n-1}
+\end{pmatrix}
+=\prod_{1\le i<j\le n}(x_j-x_i).
+\]
+Give a proof (induction or polynomial argument).
+\end{problem}
+
+\begin{problem}
+Let $A=\begin{pmatrix}2&1&0\\0&2&1\\0&0&2\end{pmatrix}$. 
+Find $\chi_A$, eigenvalues with algebraic and geometric multiplicities, decide diagonalizability, and compute $A^k$ for $k\ge 1$.
+\end{problem}
+
+\begin{problem}
+For $A=\begin{pmatrix}2&1&0\\1&2&1\\0&1&2\end{pmatrix}$, find eigenpairs, diagonalize $A=PDP^{-1}$, and compute $A^{10}$.
+\end{problem}
+
+\begin{problem}
+Let $R_\theta=\begin{pmatrix}\cos\theta&-\sin\theta\\ \sin\theta&\cos\theta\end{pmatrix}$ and $S=\mathrm{diag}(1,-1)$. 
+Compute eigenvalues of $R_\theta$ and $SR_\theta$. Over which fields ($\mathbb{R}$/$\mathbb{C}$) are they diagonalizable?
+\end{problem}
+
+\begin{problem}
+For $A(t)=\begin{pmatrix}1&t\\0&1\end{pmatrix}$, find eigenvalues, minimal polynomial, decide diagonalizability, and compute $A(t)^n$.
+\end{problem}
+
+\begin{problem}[Companion matrix]
+Let
+$C=\begin{pmatrix}
+0&0&\cdots&0&-a_0\\
+1&0&\cdots&0&-a_1\\
+0&1&\cdots&0&-a_2\\
+\vdots&\vdots&\ddots&\vdots&\vdots\\
+0&0&\cdots&1&-a_{n-1}
+\end{pmatrix}$.
+Show $\chi_C(\lambda)=\lambda^n+a_{n-1}\lambda^{n-1}+\cdots+a_0$.
+\end{problem}
+
+\begin{problem}[Use Cayley--Hamilton]
+For $A=\begin{pmatrix}3&1\\ -4&0\end{pmatrix}$, compute $\chi_A$ and use Cayley--Hamilton to express $A^{10}=\alpha A+\beta I$.
+\end{problem}
+
+\begin{problem}
+Diagonalize (if possible) and obtain a closed form for $A^n$:
+$A=\begin{pmatrix}4&0&0\\ 1&3&0\\ 0&1&2\end{pmatrix}$.
+\end{problem}
+
+\begin{problem}
+If $A$ is diagonalizable over $\mathbb{C}$ with eigenvalues $\lambda_i$ (with multiplicity), prove $\det A=\prod_i\lambda_i$ and $\mathrm{tr}\,A=\sum_i\lambda_i$. Verify for $A=\begin{pmatrix}0&-1&0\\1&0&0\\0&0&3\end{pmatrix}$.
+\end{problem}
+
+\begin{problem}
+Are 
+$A=\begin{pmatrix}2&1\\0&2\end{pmatrix}$ and $B=\begin{pmatrix}2&0\\0&2\end{pmatrix}$ similar over $\mathbb{R}$? If yes, find $P$ with $P^{-1}AP=B$; if not, explain.
+\end{problem}
+
+\begin{problem}
+Compute the minimal polynomial of $A=\begin{pmatrix}1&1&0\\0&1&1\\0&0&1\end{pmatrix}$ and the least-degree nonzero polynomial $q$ with $q(A)=0$.
+\end{problem}
+
+\begin{problem}
+For $A=\begin{pmatrix}0&-2\\1&0\end{pmatrix}$, find complex eigenvalues and a real invertible $P$ such that 
+$P^{-1}AP=\begin{pmatrix}a&-b\\ b&a\end{pmatrix}$. Then compute $e^{tA}$.
+\end{problem}
+
+\begin{problem}
+Let $A,B$ be invertible. Compute $\det\big((A^{-1}B^2A)^T\big)$ in terms of $\det A,\det B$.
+\end{problem}
+
+\begin{problem}[Matrix determinant lemma]
+Let $A=\lambda I$ and $u,v\in\mathbb{F}^n$. Show
+$\det(\mu I-(A+uv^T))=(\mu-\lambda)^{n-1}\big((\mu-\lambda)-v^Tu\big)$
+and deduce the eigenvalues of $A+uv^T$.
+\end{problem}
+
+\section*{IV. Markov Chains: Short Explainer + Tasks}
+
+\paragraph{What is a Markov chain?} 
+A Markov chain on a finite state space has a row-stochastic matrix $P$ (rows sum to $1$). 
+If $x^{(0)}$ is a row vector of probabilities, then $x^{(n)}=x^{(0)}P^n$. 
+A \emph{stationary distribution} $\pi$ satisfies $\pi=\pi P$ and $\sum_i \pi_i=1$.
+
+\paragraph{Two-state case.}
+For $P=\begin{pmatrix}1-\alpha&\alpha\\ \beta&1-\beta\end{pmatrix}$ with $\alpha,\beta\in(0,1)$,
+\[
+\pi=\left(\frac{\beta}{\alpha+\beta},\ \frac{\alpha}{\alpha+\beta}\right),\qquad
+P^n \to     1\pi \quad (n\to\infty),
+\]
+provided $P$ is irreducible and aperiodic (true here if $\alpha,\beta>0$). The second eigenvalue is $1-(\alpha+\beta)$, which controls the convergence rate.
+
+\begin{problem}[Compute and interpret]
+Let $P=\begin{pmatrix}0.8&0.2\\0.3&0.7\end{pmatrix}$. Find $\pi$, diagonalize $P$, compute $P^n$, and $\lim_{n\to\infty}P^n$. Interpret $\pi$ as the long-run fraction of time in each state.
+\end{problem}
+
+\begin{problem}[Hitting probability]
+For the same $P$, starting in state $1$, compute the probability of visiting state $2$ before returning to $1$. (Solve a $2\times2$ linear system for the hitting probabilities.)
+\end{problem}
+
+
+\section*{VII. Inner Products and Orthogonality}
+
+\begin{problem}
+Use Gram--Schmidt to orthonormalize $\{(1,1,0),(1,0,1),(0,1,1)\}$ in $\mathbb{R}^3$.
+\end{problem}
+
+\begin{problem}
+Show $T:\mathbb{R}^n\to\mathbb{R}^n$ preserves inner products iff its matrix is orthogonal.
+\end{problem}
+
+\begin{problem}
+Classify all $2\times 2$ orthogonal matrices as rotations or reflections.
+\end{problem}
+
+\section*{VIII. Canonical Forms and Jordan Theory}
+
+\begin{problem}
+Find the Jordan form of $A=\begin{pmatrix}3&1&0\\0&3&1\\0&0&3\end{pmatrix}$.
+\end{problem}
+
+\begin{problem}
+Let $A$ be real $4\times 4$ with minimal polynomial $(x-2)^2(x+1)^2$. List all possible Jordan canonical forms.
+\end{problem}
+
+\begin{problem}
+Show that a nilpotent $N$ on an $n$-dimensional space satisfies $N^n=0$. (Use Jordan form or rank considerations.)
+\end{problem}
+\section*{IX. Programming Problems}
+
+\begin{problem}[Naïve matrix multiplication, $O(n^3)$]
+You are given $A\in\mathbb{R}^{n\times m}$ and $B\in\mathbb{R}^{m\times p}$. Design an algorithm to compute $C=AB$.
+
+\textit{Hints.}
+\begin{itemize}
+  \item Use the definition $C_{ij}=\sum_{k=1}^m A_{ik}B_{kj}$ with a \emph{triple loop}.
+  \item Loop order: prefer $(i,k,j)$ so you reuse $A_{ik}$ across the inner loop.
+  \item Invariant: after processing $k$, you’ve accumulated $\sum_{t=1}^k A_{it}B_{tj}$ into $C_{ij}$.
+  \item Complexity: count multiply+add operations, show $\Theta(nmp)$; for $n=m=p$ it’s $\Theta(n^3)$.
+  \item Numerical: prefer accumulating into a local register before writing to memory to reduce rounding and cache misses.
+\end{itemize}
+\end{problem}
+
+\begin{problem}[Blocked (tiled) multiplication for cache locality]
+Modify your algorithm to multiply matrices by blocks of size $b\times b$.
+
+\textit{Hints.}
+\begin{itemize}
+  \item Partition $A,B,C$ into blocks so $C_{IJ}=\sum_K A_{IK}B_{KJ}$ where each block is $b\times b$.
+  \item Choose $b$ so that three $b\times b$ blocks fit in L1/L2 cache.
+  \item Correctness follows from associativity and distributivity of matrix multiplication.
+\end{itemize}
+\end{problem}
+
+\begin{problem}[Strassen’s divide-and-conquer (the idea)]
+For $n=2^k$, split $A,B$ into $2\times 2$ block matrices and compute $C=AB$ using 7 block multiplications instead of 8.
+
+\textit{Hints.}
+\begin{itemize}
+  \item Remember the seven $M_i$ combinations (you don’t need to memorize them—derive by solving for $C_{11},\dots,C_{22}$).
+  \item Recursively apply on sub-blocks; stop at a threshold (hybrid with naïve).
+  \item Show the recurrence $T(n)=7T(n/2)+\Theta(n^2)$ and deduce $T(n)=\Theta(n^{\log_2 7})$.
+  \item Note numerical stability trade-offs compared to naïve/blocked.
+\end{itemize}
+\end{problem}
+
+\begin{problem}[Matrix exponentiation by squaring]
+Design an algorithm to compute $A^k$ for $k\in\mathbb{N}$ efficiently.
+
+\textit{Hints.}
+\begin{itemize}
+  \item Use binary expansion of $k$: if $k$ is even, $A^k=(A^{k/2})^2$; if odd, $A^k=A\cdot A^{k-1}$.
+  \item Maintain a running result $R$ (start with $I$) and a power accumulator $B$ (start with $A$).
+  \item Complexity: $O(\log k)$ matrix multiplications; combine with blocked multiply for speed.
+\end{itemize}
+\end{problem}
+
+\begin{problem}[Gaussian elimination with partial pivoting (algorithm sketch)]
+Given $A\in\mathbb{R}^{n\times n}$ and $b\in\mathbb{R}^n$, solve $Ax=b$.
+
+\textit{Hints.}
+\begin{itemize}
+  \item For columns $k=1$ to $n$: choose pivot row $p=\arg\max_{i\ge k}|A_{ik}|$, swap rows $k$ and $p$, eliminate below.
+  \item Keep an augmented matrix $[A\,|\,b]$; after forward elimination, back-substitute.
+  \item Explain why partial pivoting helps numerical stability (growth factor).
+\end{itemize}
+\end{problem}
+\section*{Optional hints (peek only if stuck)}
+\begin{itemize}
+\item Two-state Markov: eigenvalues are $1$ and $1-(\alpha+\beta)$; use spectral decomposition to get $P^n$.
+\item $A^k$ for upper-triangular Jordan blocks: powers produce binomial coefficients on superdiagonals.
+\item Normal equations: $X^\top X$ SPD $\Rightarrow$ Cholesky. QR avoids squaring condition number.
+\item Leontief: Neumann series $\sum_{k\ge0}A^k$ converges iff $\rho(A)<1$.
+\item Matrix power: binary exponentiation uses the identity $A^{2t}=(A^t)^2$ and $A^{2t+1}=A\cdot A^{2t}$.
+\end{itemize}
+\section*{X. Applied Linear Algebra Problems (Matrix-Free)}
+
+\begin{problem}[Food Supply and Pricing]
+A bakery buys wheat and sugar from two suppliers. For each loaf of bread, the bakery uses $200$ kg wheat and $50$ kg sugar; for each cake, it uses $100$ kg wheat and $120$ kg sugar. The bakery produces $B$ loaves of bread and $C$ cakes per day.
+
+It is known that:
+\[
+\text{Total wheat used} = 2600 \ \mathrm{kg/day}, \quad
+\text{Total sugar used} = 1800 \ \mathrm{kg/day}.
+\]
+Find $B$ and $C$.
+
+\textit{Hints:}  
+Form two linear equations from the wheat and sugar usage and solve for $B$ and $C$.
+\end{problem}
+
+\begin{problem}[Food Market Customer Retention (Markov Model)]
+A customer shops at either Market A or Market B each week. If they go to A, there is a $70\%$ chance they return to A next week; otherwise they switch to B. From B, there is a $60\%$ chance they return to B; otherwise they switch to A.
+
+Find:
+\begin{enumerate}
+    \item The long-run fraction of customers at each market.
+    \item The expected return time to Market A.
+\end{enumerate}
+
+\textit{Hints:}  
+Solve $\pi = \pi P$ with $\pi_1 + \pi_2 = 1$. Return time to A is $1/\pi_A$.
+\end{problem}
+
+\begin{problem}[Recipe Mixture Problem]
+You are making an energy drink from ingredients A, B, C:
+\[
+\begin{aligned}
+&\text{A: } 100\ \mathrm{kcal\ protein},\ 50\ \mathrm{kcal\ carbs} \\
+&\text{B: } 60\ \mathrm{kcal\ protein},\ 90\ \mathrm{kcal\ carbs} \\
+&\text{C: } 20\ \mathrm{kcal\ protein},\ 150\ \mathrm{kcal\ carbs}
+\end{aligned}
+\]
+You want a $1000$ kcal drink with $40\%$ of calories from protein. Find the grams of each ingredient.
+
+\textit{Hints:}  
+Convert the $40\%$ condition to a linear equation in protein and carbs. The total calories condition gives a second equation.
+\end{problem}
+
+\begin{problem}[Graph Flow Conservation]
+Three cities X, Y, Z trade goods:
+\[
+\begin{aligned}
+&\text{From X: } 100 \text{ units to Y, } 50 \text{ to Z} \\
+&\text{From Y: unknown to X, } 60 \text{ to Z} \\
+&\text{From Z: } 40 \text{ to X, unknown to Y}
+\end{aligned}
+\]
+Every city’s inflow equals its outflow. Find the unknown flows.
+
+\textit{Hints:}  
+Flow conservation at each node gives a linear equation in the unknown flows.
+\end{problem}
+
+\begin{problem}[Seasonal Demand (Markov Model)]
+A restaurant’s daily customer level is either Low (L), Medium (M), or High (H) with transition probabilities:
+\[
+P = \begin{pmatrix}
+0.6 & 0.3 & 0.1 \\
+0.2 & 0.5 & 0.3 \\
+0.1 & 0.3 & 0.6
+\end{pmatrix}.
+\]
+Find:
+\begin{enumerate}
+    \item The stationary distribution $(\pi_L,\pi_M,\pi_H)$.
+    \item The long-run average number of customers if L = 40, M = 70, H = 120.
+\end{enumerate}
+
+\textit{Hints:}  
+Solve $\pi = \pi P$, $\pi_L + \pi_M + \pi_H = 1$. Average customers = $\pi_L \cdot 40 + \pi_M \cdot 70 + \pi_H \cdot 120$.
+\end{problem}
+
+\begin{problem}[Transportation Optimization]
+A farmer delivers apples from Farm F to Shops S1, S2, S3. Transport cost per crate is:
+\[
+\text{F}\to S_1: 2, \quad
+\text{F}\to S_2: 3, \quad
+\text{F}\to S_3: 4.
+\]
+Demands: $S_1$: 50 crates, $S_2$: 40 crates, $S_3$: 60 crates. Farm capacity: $150$ crates.
+
+Formulate a linear optimization problem to minimize total transport cost and find the optimal distribution.
+
+\textit{Hints:}  
+Constraints: total outflow = farm capacity, inflow per shop = demand. Minimize a linear cost function.
+\end{problem}
+% In your preamble (if not already loaded):
+% \usepackage{amssymb}
+\section*{Review Questions (Multiple Choice)}
+
+\begin{enumerate}
+\item (Finite dimension) For any finite-dimensional $V$, which is true?\\
+\(\square\) Any spanning set has size $\le$ any LI set.\\
+\(\square\) Any LI set has size $\le$ any spanning set.\\
+\(\square\) All subsets are bases.\\
+\(\square\) Dimension depends on the field but not on $V$.
+
+\item (Rank–nullity) For $T:V\to W$ linear (finite-dim $V$), which identity holds?\\
+\(\square\) $\dim V=\mathrm{rank}\,T-\mathrm{nullity}\,T$.\\
+\(\square\) $\dim V=\mathrm{rank}\,T+\mathrm{nullity}\,T$.\\
+\(\square\) $\dim W=\mathrm{rank}\,T+\mathrm{nullity}\,T$.\\
+\(\square\) $\dim V=\dim W$.
+
+\item (Determinant) For square $A,B$ of same size:\\
+\(\square\) $\det(AB)=\det A+\det B$.\\
+\(\square\) $\det(AB)=\det A\cdot\det B$.\\
+\(\square\) $\det(AB)=\det A$.\\
+\(\square\) $\det(AB)=\det B$.
+
+\item (Invertibility) A square matrix $A$ is invertible iff:\\
+\(\square\) $\det A=0$.\\
+\(\square\) $\det A\neq 0$.\\
+\(\square\) $\mathrm{rank}(A)<n$.\\
+\(\square\) $A$ is upper triangular.
+
+\item (Projection spectrum) If $P^2=P$ (real), then the eigenvalues of $P$ are:\\
+\(\square\) $\{0,1\}$ only.\\
+\(\square\) $\{-1,0,1\}$.\\
+\(\square\) All reals in $[0,1]$.\\
+\(\square\) Complex unit circle.
+
+\item (Orthogonal) For real $Q$ orthogonal:\\
+\(\square\) $Q^TQ=I$.\\
+\(\square\) $QQ^T=2I$.\\
+\(\square\) Columns are arbitrary.\\
+\(\square\) $\det Q=0$.
+
+\item (Rotation eigenvalues) In $\mathbb{R}^2$, $R_\theta$ has complex eigenvalues:\\
+\(\square\) $1,1$.\\
+\(\square\) $-1,-1$.\\
+\(\square\) $e^{\pm i\theta}$.\\
+\(\square\) $\cos\theta\pm i$.
+
+\item (Invertibility of $I-R_\theta$) Over $\mathbb{R}$, $I-R_\theta$ is invertible iff:\\
+\(\square\) $\theta\equiv 0\pmod{2\pi}$.\\
+\(\square\) $\theta\not\equiv 0\pmod{2\pi}$.\\
+\(\square\) Always.\\
+\(\square\) Never.
+
+\item (Poly space) $\{1,x,x^2\}$ in $P_2(\mathbb{F})$ is:\\
+\(\square\) Dependent.\\
+\(\square\) Spanning but not independent.\\
+\(\square\) Basis.\\
+\(\square\) None.
+
+\item (Dual basis) For basis $\{v_i\}$ and dual $\{\varphi_i\}$:\\
+\(\square\) $\varphi_i(v_j)=\delta_{ij}$.\\
+\(\square\) $\varphi_i(v_j)=1$.\\
+\(\square\) $\varphi_i(v_j)=0$.\\
+\(\square\) Undefined.
+
+\item (Derivative on $P_2$) $D:p\mapsto p'$ on $P_2$ has:\\
+\(\square\) Rank $3$.\\
+\(\square\) Rank $2$.\\
+\(\square\) Rank $1$.\\
+\(\square\) Rank $0$.
+
+\item (Nullity of $D$ above) The nullity of $D$ is:\\
+\(\square\) $0$.\\
+\(\square\) $1$.\\
+\(\square\) $2$.\\
+\(\square\) $3$.
+
+\item (Map $T(x,y,z)=(x+y,y+z,x+z)$) Then:\\
+\(\square\) $\mathrm{rank}=2$.\\
+\(\square\) $\mathrm{rank}=3$ (invertible).\\
+\(\square\) $\mathrm{nullity}=1$.\\
+\(\square\) Not linear.
+
+\item (Kernel of derivative) For $D$ on polynomials:\\
+\(\square\) $\ker D=\{0\}$.\\
+\(\square\) $\ker D$ are constants.\\
+\(\square\) $\ker D$ are linear polynomials.\\
+\(\square\) Empty.
+
+\item (Triangular eigenvalues) For upper triangular $A$:\\
+\(\square\) Eigenvalues are diagonal entries.\\
+\(\square\) Eigenvalues are zeros of first row.\\
+\(\square\) Need not exist.\\
+\(\square\) Always all $1$.
+
+\item (Trace/eigenvalues) For any $A$ over $\mathbb{C}$:\\
+\(\square\) $\mathrm{tr}(A)$ equals product of eigenvalues.\\
+\(\square\) $\det(A)$ equals sum of eigenvalues.\\
+\(\square\) $\mathrm{tr}(A)$ equals sum of eigenvalues.\\
+\(\square\) None.
+
+\item (2×2 characteristic poly) For $A\in M_2$:\\
+\(\square\) $\chi_A(\lambda)=\lambda^2-\det(A)\lambda+\mathrm{tr}(A)$.\\
+\(\square\) $\chi_A(\lambda)=\lambda^2-\mathrm{tr}(A)\lambda+\det(A)$.\\
+\(\square\) $\chi_A(\lambda)=\lambda^2+\mathrm{tr}(A)\lambda+\det(A)$.\\
+\(\square\) $\lambda^2-\det(A)$.
+
+\item (Cayley–Hamilton) A square $A$:\\
+\(\square\) Satisfies its characteristic polynomial.\\
+\(\square\) Satisfies its minimal polynomial only if diagonalizable.\\
+\(\square\) Never satisfies polynomials.\\
+\(\square\) Only for symmetric $A$.
+
+\item (Nilpotent eigenvalues) If $N^k=0$, then eigenvalues are:\\
+\(\square\) All $1$.\\
+\(\square\) All $0$.\\
+\(\square\) $\pm 1$.\\
+\(\square\) Unit circle.
+
+\item (Triangularizable) If $A$ is similar to an upper triangular matrix, its diagonal entries are:\\
+\(\square\) Arbitrary.\\
+\(\square\) All zero.\\
+\(\square\) The eigenvalues (with multiplicity).\\
+\(\square\) The singular values.
+
+\item (Gram–Schmidt) Applied to a LI set in an inner product space yields:\\
+\(\square\) Orthonormal basis of its span.\\
+\(\square\) Same set unchanged.\\
+\(\square\) Empty set.\\
+\(\square\) A basis of the orthogonal complement.
+
+\item (Projection in $\mathbb{R}^2$) Nontrivial projection $P$ onto a line has:\\
+\(\square\) $\det P=1$.\\
+\(\square\) $\det P=0$.\\
+\(\square\) $\det P=-1$.\\
+\(\square\) $\det P=2$.
+
+\item (Subspace dimension formula) For $U,W\le V$:\\
+\(\square\) $\dim(U+W)=\dim U+\dim W-\dim(U\cap W)$.\\
+\(\square\) $\dim(U+W)=\dim U+\dim W$.\\
+\(\square\) $\dim(U\cap W)=0$ always.\\
+\(\square\) None.
+
+\item (Spanning $=n$ vectors in $\mathbb{R}^n$) Then the set is:\\
+\(\square\) Dependent.\\
+\(\square\) A basis.\\
+\(\square\) Not enough info.\\
+\(\square\) Orthogonal.
+
+\item (Change of basis) The matrix from $B'$ to $B$ has columns:\\
+\(\square\) Coordinates of $B$ in $B'$.\\
+\(\square\) Coordinates of $B'$ in $B$.\\
+\(\square\) Eigenvectors.\\
+\(\square\) Orthonormal vectors.
+
+\item (Composition matrices) If $S:U\to V$, $T:V\to W$ and bases $B_U,B_V,B_W$, then:\\
+\(\square\) $[T\circ S]_{B_U}^{B_W}=[S]_{B_U}^{B_V}[T]_{B_V}^{B_W}$.\\
+\(\square\) $[T\circ S]_{B_U}^{B_W}=[T]_{B_V}^{B_W}[S]_{B_U}^{B_V}$.\\
+\(\square\) Order doesn’t matter.\\
+\(\square\) Product undefined.
+
+\item (Quick rank) $\begin{pmatrix}1&2\\2&4\end{pmatrix}$ has rank:\\
+\(\square\) $0$.\\
+\(\square\) $1$.\\
+\(\square\) $2$.\\
+\(\square\) $3$.
+
+\item (2×2 det) $\det\begin{pmatrix}a&b\\c&d\end{pmatrix}$ equals:\\
+\(\square\) $ab+cd$.\\
+\(\square\) $ad-bc$.\\
+\(\square\) $ac-bd$.\\
+\(\square\) $a+b+c+d$.
+
+\item (2×2 inverse) If $ad-bc\neq 0$, then:\\
+\(\square\) $A^{-1}=\frac{1}{ad-bc}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}$.\\
+\(\square\) $A^{-1}=\begin{pmatrix}a&b\\c&d\end{pmatrix}$.\\
+\(\square\) $A^{-1}$ doesn’t exist.\\
+\(\square\) $A^{-1}=\frac{1}{ad-bc}\begin{pmatrix}a&b\\c&d\end{pmatrix}$.
+
+\item (Reflection $S=\mathrm{diag}(1,-1)$) Eigenvalues are:\\
+\(\square\) $1,1$.\\
+\(\square\) $-1,-1$.\\
+\(\square\) $1,-1$.\\
+\(\square\) $e^{\pm i\theta}$.
+
+\item (Markov) For row-stochastic $P$:\\
+\(\square\) $1$ is an eigenvalue.\\
+\(\square\) $\det P=1$.\\
+\(\square\) All eigenvalues $=1$.\\
+\(\square\) No eigenvalues.
+
+\item (Stationary dist.) $\pi$ satisfies:\\
+\(\square\) $P\pi=\pi$.\\
+\(\square\) $\pi=\pi P$ and $\sum_i\pi_i=1$.\\
+\(\square\) $\pi P^2=\pi$ only.\\
+\(\square\) $\pi$ arbitrary.
+
+\item (Convergence) Irreducible, aperiodic finite-state Markov $P$:\\
+\(\square\) $P^n\to 0$.\\
+\(\square\) $P^n\to I$.\\
+\(\square\) $P^n\to \mathbf{1}\pi$.\\
+\(\square\) Diverges.
+
+\item (Companion matrix) Its characteristic polynomial equals:\\
+\(\square\) $x^n+a_{n-1}x^{n-1}+\cdots+a_0$.\\
+\(\square\) $x^n$.\\
+\(\square\) Minimal polynomial.\\
+\(\square\) Determinant.
+
+\item (Vandermonde) For distinct $x_i$ the determinant equals:\\
+\(\square\) $\prod_i x_i$.\\
+\(\square\) $\prod_{i<j}(x_j-x_i)$.\\
+\(\square\) $0$.\\
+\(\square\) $\sum_i x_i$.
+
+\item (Rank inequality) Always true:\\
+\(\square\) $\mathrm{rank}(TS)\ge \max\{\mathrm{rank} T,\mathrm{rank} S\}$.\\
+\(\square\) $\mathrm{rank}(TS)\le \min\{\mathrm{rank} T,\mathrm{rank} S\}$.\\
+\(\square\) $\mathrm{rank}(TS)=\mathrm{rank} T+\mathrm{rank} S$.\\
+\(\square\) None.
+
+\item (Kernels and composition) For $S:U\to V$, $T:V\to W$:\\
+\(\square\) $S^{-1}(\ker T)\subseteq \ker(T\circ S)$.\\
+\(\square\) $S^{-1}(\ker T)=\{0\}$ always.\\
+\(\square\) $\ker(T\circ S)=\{0\}$ always.\\
+\(\square\) No relation.
+
+\item (Real symmetric) Then:\\
+\(\square\) Not diagonalizable.\\
+\(\square\) Diagonalizable by orthogonal matrix.\\
+\(\square\) Only upper-triangularizable.\\
+\(\square\) Needs complex field.
+
+\item (Normal/complex) If $A$ is normal ($AA^*=A^*A$):\\
+\(\square\) Unitary diagonalizable.\\
+\(\square\) Never diagonalizable.\\
+\(\square\) Only triangularizable.\\
+\(\square\) Needs real entries.
+
+\item (Min vs char poly) On finite-dim spaces:\\
+\(\square\) $m_A$ divides $\chi_A$.\\
+\(\square\) $\chi_A$ divides $m_A$.\\
+\(\square\) Unrelated.\\
+\(\square\) Equal always.
+
+\item (Diagonalizable criterion) $A$ is diagonalizable over a splitting field iff:\\
+\(\square\) $\chi_A$ has distinct roots.\\
+\(\square\) $m_A$ splits with distinct linear factors.\\
+\(\square\) $\det A\neq 0$.\\
+\(\square\) $A$ is symmetric.
+
+\item (Similarity invariants) If $A\sim B$:\\
+\(\square\) $\mathrm{tr}A=\mathrm{tr}B$, $\det A=\det B$.\\
+\(\square\) Determinant changes sign.\\
+\(\square\) Trace doubles.\\
+\(\square\) None.
+
+\item (Planar orthogonal, $\det=1$) Then:\\
+\(\square\) Reflection.\\
+\(\square\) Rotation.\\
+\(\square\) Projection.\\
+\(\square\) Shear.
+
+\item (Projection trace) For projection $P$:\\
+\(\square\) $\mathrm{tr}(P)=0$.\\
+\(\square\) $\mathrm{tr}(P)=\mathrm{rank}(P)$.\\
+\(\square\) $\mathrm{tr}(P)=n$.\\
+\(\square\) $\mathrm{tr}(P)$ arbitrary.
+
+\item (Rank of $A^TA$) For any $A$:\\
+\(\square\) $\mathrm{rank}(A^TA)=\mathrm{rank}(A)$.\\
+\(\square\) $=\mathrm{rank}(A)+\mathrm{rank}(A^T)$.\\
+\(\square\) $=n$ always.\\
+\(\square\) $=0$.
+
+\item (Invertible $A$) Then:\\
+\(\square\) $\ker A=\{0\}$.\\
+\(\square\) $\ker A\neq\{0\}$.\\
+\(\square\) $\mathrm{rank}A<n$.\\
+\(\square\) $\det A=0$.
+
+\item (Orthonormal columns) For $A$ with orthonormal columns:\\
+\(\square\) $A^TA=I$.\\
+\(\square\) $AA^T=I$ for any shape.\\
+\(\square\) $\det A=0$ always.\\
+\(\square\) Not full rank.
+
+\item (Triangular determinant) For upper triangular $U$:\\
+\(\square\) $\det U = \prod$ diagonal.\\
+\(\square\) $\det U = \sum$ diagonal.\\
+\(\square\) $\det U = 0$.\\
+\(\square\) Depends on off-diagonals.
+
+\item (Block triangular determinant) For $A=\begin{pmatrix}B&C\\0&D\end{pmatrix}$:\\
+\(\square\) $\det A=\det B+\det D$.\\
+\(\square\) $\det A=\det B\cdot\det D$.\\
+\(\square\) $\det A=\det C$.\\
+\(\square\) $0$.
+
+\item (Commuting with simple spectrum) If $AB=BA$ and $A$ has $n$ distinct eigenvalues:\\
+\(\square\) $A,B$ are simultaneously diagonalizable.\\
+\(\square\) $B$ is a scalar.\\
+\(\square\) $B$ is nilpotent.\\
+\(\square\) No conclusion.
+
+\item (Dimension of $P_m$) Over $\mathbb{F}$:\\
+\(\square\) $m$.\\
+\(\square\) $m+1$.\\
+\(\square\) $2m$.\\
+\(\square\) Infinite.
+
+\item (Interpolation map) $T:P_m\to\mathbb{R}^{m+1}$, $T(p)=(p(x_0),\dots,p(x_m))$ with distinct $x_i$:\\
+\(\square\) Not linear.\\
+\(\square\) An isomorphism.\\
+\(\square\) Not injective.\\
+\(\square\) Not surjective.
+
+\item (Kernel of nonzero functional) For nonzero $f\in V^*$:\\
+\(\square\) $\ker f=V$.\\
+\(\square\) $\ker f$ is a hyperplane (codim $1$).\\
+\(\square\) $\ker f=\{0\}$.\\
+\(\square\) Empty.
+
+\item (Fundamental theorem of LA) For any real $A$:\\
+\(\square\) $\mathcal{N}(A^T)=\mathcal{C}(A)^\perp$.\\
+\(\square\) $\mathcal{N}(A)=\mathcal{C}(A)^\perp$.\\
+\(\square\) $\mathcal{C}(A)=\mathbb{R}^n$.\\
+\(\square\) None.
+
+\item (Matrix exponential determinant) For any square $A$:\\
+\(\square\) $\det(e^A)=e^{\mathrm{tr}A}$.\\
+\(\square\) $\det(e^A)=\mathrm{tr}(e^A)$.\\
+\(\square\) $\det(e^A)=1$ always.\\
+\(\square\) Undefined.
+
+\item (Transpose/inverse) For invertible $A$:\\
+\(\square\) $(A^{-1})^T=(A^T)^{-1}$.\\
+\(\square\) $(A^{-1})^T=A$.\\
+\(\square\) $(A^T)^{-1}=A$.\\
+\(\square\) False.
+
+\item (Rank-one) For $u,v\neq 0$:\\
+\(\square\) $uv^T$ has rank $1$.\\
+\(\square\) Rank $2$.\\
+\(\square\) Rank $0$.\\
+\(\square\) Not linear.
+
+\item (Projection eigenspaces) For orthogonal projection onto $U$:\\
+\(\square\) Eigenvalues $1$ on $U$, $0$ on $U^\perp$.\\
+\(\square\) Eigenvalues $\pm i$.\\
+\(\square\) All $1$.\\
+\(\square\) All $0$.
+
+\item ($I-R_\theta$ revisited) Over $\mathbb{R}$, $I-R_\theta$ is invertible iff:\\
+\(\square\) $\theta\not\equiv 0\pmod{2\pi}$.\\
+\(\square\) $\theta\equiv 0\pmod{2\pi}$.\\
+\(\square\) Always.\\
+\(\square\) Never.
+
+\item (Two-state Markov stationary distribution) For
+$P=\begin{pmatrix}1-\alpha&\alpha\\ \beta&1-\beta\end{pmatrix}$ with $\alpha,\beta>0$, the stationary distribution is:\\
+\(\square\) $\left(\frac{\alpha}{\alpha+\beta},\frac{\beta}{\alpha+\beta}\right)$.\\
+\(\square\) $\left(\frac{\beta}{\alpha+\beta},\frac{\alpha}{\alpha+\beta}\right)$.\\
+\(\square\) $(\tfrac12,\tfrac12)$.\\
+\(\square\) $(1,0)$.
+\end{enumerate}
+\section*{XII. Additional Practice Problems}
+
+\begin{problem}
+Let $A = \begin{pmatrix}1 & 2 \\ 3 & 4\end{pmatrix}$. Compute $\det A$, $\mathrm{rank}(A)$, and check if $A$ is invertible.
+% Key: $\det A = -2$, rank = 2, invertible
+\end{problem}
+
+\begin{problem}
+Find a basis for the kernel of the matrix $A = \begin{pmatrix}1 & 2 & 1 \\ 0 & 1 & 1 \\ 1 & 3 & 2\end{pmatrix}$.
+% Key: Kernel is 1-dimensional, basis $\begin{pmatrix}1\\-1\\1\end{pmatrix}$
+\end{problem}
+
+\begin{problem}
+Let $T: \mathbb{R}^2 \to \mathbb{R}^2$ be defined by $T(x, y) = (3x + y, x + 2y)$. Find $[T]$ in standard basis and decide if $T$ is invertible.
+% Key: Matrix = [[3,1],[1,2]], det = 5 ≠ 0 ⇒ invertible
+\end{problem}
+
+\begin{problem}
+Find all eigenvalues and eigenvectors of $A = \begin{pmatrix}2 & 0 \\ 0 & -1\end{pmatrix}$.
+% Key: Eigenvalues 2, -1; eigenvectors (1,0), (0,1)
+\end{problem}
+
+\begin{problem}
+Let $V$ be the space of all functions $f:\mathbb{R}\to\mathbb{R}$ such that $f'' = -f$. Show that $V$ is a vector space. Find a basis.
+% Key: Basis = $\{\sin x, \cos x\}$
+\end{problem}
+
+\begin{problem}
+Let $T: P_2 \to \mathbb{R}^3$ be defined by $T(p) = (p(0), p(1), p(2))$. Find the matrix of $T$ in the basis $\{1, x, x^2\}$.
+% Key: Rows = [1, 0, 0], [1, 1, 1], [1, 2, 4]
+\end{problem}
+
+\begin{problem}
+Determine if the vectors $v_1 = (1,2,3)$, $v_2 = (2,4,6)$, $v_3 = (3,6,9)$ form a basis.
+% Key: No, all vectors linearly dependent
+\end{problem}
+
+\begin{problem}
+Suppose $A$ is a $3 \times 3$ matrix with eigenvalues $2, 2, -1$. Is $A$ diagonalizable?
+% Key: Not always, check algebraic vs geometric multiplicity of 2
+\end{problem}
+
+\begin{problem}
+Let $T:\mathbb{R}^2 \to \mathbb{R}^2$ reflect points across the line $y = x$. Find $[T]$.
+% Key: Matrix = [[0,1],[1,0]]
+\end{problem}
+
+\begin{problem}
+Find the matrix representing the projection onto the $xy$-plane in $\mathbb{R}^3$.
+% Key: Matrix = [[1,0,0],[0,1,0],[0,0,0]]
+\end{problem}
+
+\begin{problem}
+Let $f(x) = x^3 - 2x^2 + 3x - 1$. Use companion matrix to represent multiplication by $x$ modulo $f$.
+% Key: Companion matrix = [[0,0,1],[1,0,-3],[0,1,2]]
+\end{problem}
+
+\begin{problem}
+Given the food transition matrix $P = \begin{pmatrix}0.7 & 0.3\\0.4 & 0.6\end{pmatrix}$ between rice and noodles, compute $\lim_{n\to\infty}P^n$.
+% Key: Steady state = (4/7, 3/7)
+\end{problem}
+
+\begin{problem}
+Let $G$ be a graph with adjacency matrix $A$. What does $A^n_{ij}$ count?
+% Key: Number of walks of length $n$ from vertex $i$ to $j$
+\end{problem}
+
+\begin{problem}
+Let $T:\mathbb{R}^3 \to \mathbb{R}^2$ be given by a matrix with rank 2. What is the nullity?
+% Key: dim domain = 3 ⇒ nullity = 3 - 2 = 1
+\end{problem}
+
+\begin{problem}
+Let $T$ be a linear transformation such that $T^2 = T$. Prove the image and kernel of $T$ intersect trivially.
+% Key: Use idempotent ⇒ Im ∩ Ker = \{0\}
+\end{problem}
+
+\begin{problem}
+Write the algorithm for matrix multiplication $C = AB$, where $A$ is $m \times n$, $B$ is $n \times p$.
+% Key: $C_{ij} = \sum_{k=1}^n A_{ik}B_{kj}$
+\end{problem}
+
+\begin{problem}
+Let $T: \mathbb{R}^3 \to \mathbb{R}^3$ defined by $T(x,y,z) = (x+z, y, z)$. Is $T$ invertible? Compute its inverse if yes.
+% Key: Yes, matrix is invertible, compute $T^{-1}$
+\end{problem}
+
+\begin{problem}
+Suppose a vector $v$ satisfies $A^3v = 0$ but $A^2v \neq 0$. What can be said about the minimal polynomial of $A$?
+% Key: $x^3$ divides minimal polynomial
+\end{problem}
+
+\begin{problem}
+Let $f(x) = x^n$ be in $P_n$. Define $D(f) = f'$. Show $D$ is a linear map and find its matrix in monomial basis.
+% Key: Matrix = upper diagonal with entries $n,n-1,...,1$
+\end{problem}
+
+\begin{problem}
+Find the rank of matrix $A = \begin{pmatrix}1 & 0 & 1 \\ 1 & 1 & 2 \\ 2 & 1 & 3\end{pmatrix}$.
+% Key: Rank = 2
+\end{problem}
+
+\begin{problem}
+Let $v_1 = (1,0,0)$, $v_2 = (1,1,0)$, $v_3 = (1,1,1)$. Use Gram-Schmidt to orthonormalize.
+% Key: Step-by-step orthonormal set
+\end{problem}
+
+\begin{problem}
+Is the following system consistent? 
+$
+\begin{cases}
+x + y + z = 1 \\
+x + 2y + 3z = 2 \\
+2x + 3y + 4z = 3
+\end{cases}
+$
+% Key: No, inconsistent (row reduction)
+\end{problem}
+
+\begin{problem}
+Let $V$ be vector space of $2\times 2$ matrices. Find $\dim V$ and a basis.
+% Key: dim = 4, basis: matrices with 1 at each position
+\end{problem}
+
+\begin{problem}
+Let $T$ be defined on polynomials $P_3$ by $T(p) = p(1)$. What is the rank of $T$?
+% Key: Rank = 1 (maps to scalar)
+\end{problem}
+
+\begin{problem}
+Let $T$ be rotation by $\pi/4$ in $\mathbb{R}^2$. Is $T$ diagonalizable over $\mathbb{C}$? Over $\mathbb{R}$?
+% Key: Yes over $\mathbb{C}$, no over $\mathbb{R}$
+\end{problem}
+
+\begin{problem}
+Let $v_1 = (1,2)$, $v_2 = (3,6)$. Compute $\mathrm{span}\{v_1,v_2\}$ and determine if it's 1D or 2D.
+% Key: Linearly dependent ⇒ span is 1D
+\end{problem}
+
+\begin{problem}
+Let $T$ be defined by $T(f) = f''$ on $P_3$. Find the matrix of $T$ in monomial basis.
+% Key: Matrix = zeros except 2 in (1,3), 6 in (2,4)
+\end{problem}
+
+\begin{problem}
+Let $A$ be $2\times 2$ with $\chi_A(x) = x^2 + 1$. Find $A^4$.
+% Key: Use Cayley-Hamilton: $A^2 = -I \Rightarrow A^4 = I$
+\end{problem}
+\section*{Answer Key (choice number 1–4)}
+\begin{flushleft}
+1.\,2 \quad 2.\,2 \quad 3.\,2 \quad 4.\,2 \quad 5.\,1 \quad 6.\,1 \quad 7.\,3 \quad 8.\,2 \quad 9.\,3 \quad 10.\,1\\
+11.\,2 \quad 12.\,2 \quad 13.\,2 \quad 14.\,2 \quad 15.\,1 \quad 16.\,3 \quad 17.\,2 \quad 18.\,1 \quad 19.\,2 \quad 20.\,3\\
+21.\,1 \quad 22.\,2 \quad 23.\,1 \quad 24.\,2 \quad 25.\,2 \quad 26.\,2 \quad 27.\,2 \quad 28.\,2 \quad 29.\,1 \quad 30.\,3\\
+31.\,1 \quad 32.\,2 \quad 33.\,3 \quad 34.\,1 \quad 35.\,2 \quad 36.\,2 \quad 37.\,1 \quad 38.\,2 \quad 39.\,1 \quad 40.\,1\\
+41.\,2 \quad 42.\,1 \quad 43.\,2 \quad 44.\,2 \quad 45.\,1 \quad 46.\,1 \quad 47.\,1 \quad 48.\,1 \quad 49.\,2 \quad 50.\,1\\
+51.\,2 \quad 52.\,2 \quad 53.\,2 \quad 54.\,1 \quad 55.\,1 \quad 56.\,1 \quad 57.\,1 \quad 58.\,1 \quad 59.\,1 \quad 60.\,2
+\end{flushleft}
+
+
+
+\end{document}

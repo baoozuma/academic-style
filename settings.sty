@@ -1,0 +1,115 @@
+% --- Font & encoding ---
+\linespread{1.05}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+% --- Core math & theorem tools ---
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{mdframed}
+% --- Graphics / color / frames ---
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{mdframed}
+
+% --- Lists, fonts, layout ---
+\usepackage{mathpazo}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{setspace}
+\setstretch{1.2}
+\setlength{\parskip}{0.5em}
+\setlength{\parindent}{0pt}
+\usepackage{enumitem}
+
+% --- Header/footer ---
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\nouppercase{\leftmark}}
+\fancyhead[R]{\thepage}
+
+% --- Section titles ---
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\large\bfseries}{\thesubsection.}{0.5em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\thesubsubsection.}{0.5em}{}
+
+% --- Hyperref (load last) ---
+\usepackage[colorlinks=true, linkcolor=blue, urlcolor=blue, citecolor=blue]{hyperref}
+
+% --- Small macros ---
+\newcommand{\bb}{\mathbb}
+\newcommand{\ep}{\varepsilon}
+\newcommand{\limit}{\displaystyle \lim}
+\newcommand{\ra}{\Rightarrow}
+\newcommand{\lra}{\Leftrightarrow}
+\newcommand{\dsum}{\displaystyle \sum}
+\newcommand{\dprof}{\displaystyle \prod}
+
+% Common linear algebra operators
+\newcommand{\rank}{\mathrm{rank}}
+\newcommand{\kernel}{\mathrm{ker}}
+\newcommand{\im}{\mathrm{Im}}
+\newcommand{\spann}{\mathrm{span}}
+
+
+
+
+% --- Theorem-style things ---
+\newtheoremstyle{upright} % name
+  {}{}                    % space above/below
+  {\normalfont}           % body font
+  {}                      % indent
+  {\bfseries}             % head font (Theorem, Lemma, etc.)
+  {:}                     % punctuation after head (colon instead of dot)
+  { }                     % space after head
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ (\textbf{#3})}} % head spec
+\theoremstyle{upright}
+\newtheorem{problem}{Problem}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{definition}{Definition}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{claim}{Claim}[section]
+\newmdtheoremenv{boxedlemma}{Lemma}
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{%
+  \par\pushQED{\qed}\normalfont
+  \topsep6\p@\@plus6\p@\relax
+  \trivlist
+  \item[\hskip\labelsep\scshape #1\@addpunct{.}] % PROOF in small caps
+}{%
+  \popQED\endtrivlist\@endpefalse
+}
+\makeatother
+% mdframed wrappers
+\definecolor{bk}{rgb}{0.0,0.0,0.61}
+\definecolor{p}{rgb}{0.1,0.1,0.44}
+\definecolor{c}{rgb}{0.55,0.27,0.07}
+\AtBeginEnvironment{problem}{\par\vspace{0.5em}}
+\AtEndEnvironment{problem}{\par\vspace{0.8em}}
+\newmdenv[linecolor=black,linewidth=0.02cm]{myframe}
+\newmdenv[linecolor=black,backgroundcolor=blue!4,linewidth=0.04cm]{fr} % <- fixed
+
+% Optional Vietnamese-named theorem wrappers (delete if unused)
+\newtheorem{baitoan}{\textbf{Problem}}[section]
+\newtheorem{btv}{\textbf{Problem}}[section]
+
+\newenvironment{bt}{%
+  \color{p}\begin{myframe}\begin{baitoan}%
+}{%
+  \end{baitoan}\end{myframe}%
+}
+
+% Remove environments that rely on undefined \m, \bod, etc.
+% \newenvironment{bd}{\begin{bod}\upshape}{\end{bod}}
+% \newenvironment{md}{\m\upshape}{\endm}
+% \newenvironment{btvn}{\begin{btv}}{\end{btv}}
+
+% Solution environment
+\newenvironment{sol}{%
+  \begin{proof}[\textbf{Solution}]%
+}{%
+  \end{proof}%
+}
